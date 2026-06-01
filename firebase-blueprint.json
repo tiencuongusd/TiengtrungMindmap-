@@ -1,0 +1,22 @@
+{
+  "entities": {
+    "user": {
+      "title": "User Profile",
+      "description": "User profile information for gated content access",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "isPremium": { "type": "boolean", "description": "Flag to indicate if user has full access (though here index based)" }
+      },
+      "required": ["uid", "email"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "user",
+      "description": "User profile documents"
+    }
+  }
+}

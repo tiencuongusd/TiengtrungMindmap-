@@ -1,0 +1,8 @@
+{
+  "name": "Remix: App Học Tiếng Trung Quốc MindMap - Học Cơ Bản \u0026 Online",
+  "description": "Ứng dụng học tiếng Trung Quốc cơ bản online với phương pháp sơ đồ tư duy (Mind Map). Bao gồm 125 bài học và 2000 từ vựng giúp bạn chinh phục tiếng Trung thần tốc.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

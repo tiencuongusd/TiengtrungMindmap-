@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", serif;
+  --font-chinese: "Noto Sans SC", sans-serif;
+  --color-brand-red: #DE2910;
+  --color-brand-stone: #F7F7F5;
+  --color-brand-paper: #FDFDFB;
+  --color-amber-node: #F59E0B;
+}
+
+/* Protection Classes */
+.no-select {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.watermark-text {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.03;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.5em;
+  font-size: 8rem;
+  z-index: 0;
+  white-space: nowrap;
+}
+
+@layer base {
+  body {
+    @apply bg-brand-stone text-[#1A1A1A] font-sans antialiased;
+  }
+}
+
+.paper-bg {
+  background-color: var(--color-brand-paper);
+  background-image: 
+    radial-gradient(#00000005 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
+}
+
+.text-meta {
+  @apply text-[10px] uppercase font-bold tracking-widest text-[#1A1A1A]/40;
+}
+
+.chinese-char {
+  font-family: var(--font-chinese);
+  @apply font-bold;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-black/10 rounded-full hover:bg-black/20;
+}
