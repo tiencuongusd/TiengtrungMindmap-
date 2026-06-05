@@ -2,11 +2,48 @@ import React, { useEffect, useRef, useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Play, RotateCcw, Eye, EyeOff, Sparkles, HelpCircle } from 'lucide-react';
 import HanziWriter from 'hanzi-writer';
+import { Confetti } from './Confetti';
 
 interface StrokeOrderWriterProps {
   word: string;
   onClose?: () => void;
 }
+
+const playSuccessSound = () => {
+  try {
+    const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+    if (!AudioContextClass) return;
+    const ctx = new AudioContextClass();
+    
+    // Create a beautiful high chime/ding sound
+    const osc1 = ctx.createOscillator();
+    const osc2 = ctx.createOscillator();
+    const gainNode = ctx.createGain();
+
+    osc1.type = 'sine';
+    osc1.frequency.setValueAtTime(987.77, ctx.currentTime); // B5 note
+    osc1.frequency.exponentialRampToValueAtTime(1318.51, ctx.currentTime + 0.1); // Slide to E6
+
+    osc2.type = 'sine';
+    osc2.frequency.setValueAtTime(1975.53, ctx.currentTime); // High B6 harmonic for crisp crystal ping
+
+    gainNode.gain.setValueAtTime(0, ctx.currentTime);
+    gainNode.gain.linearRampToValueAtTime(0.2, ctx.currentTime + 0.05);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.0); // Decay nicely
+
+    osc1.connect(gainNode);
+    osc2.connect(gainNode);
+    gainNode.connect(ctx.destination);
+
+    osc1.start(ctx.currentTime);
+    osc2.start(ctx.currentTime);
+
+    osc1.stop(ctx.currentTime + 1.1);
+    osc2.stop(ctx.currentTime + 1.1);
+  } catch (error) {
+    console.warn("Failed to play success sound", error);
+  }
+};
 
 export const StrokeOrderWriter: React.FC<StrokeOrderWriterProps> = ({ word, onClose }) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -25,6 +62,8 @@ export const StrokeOrderWriter: React.FC<StrokeOrderWriterProps> = ({ word, onCl
   const [currentStrokeIndex, setCurrentStrokeIndex] = useState<number>(0);
   const [totalStrokes, setTotalStrokes] = useState<number>(0);
   const [successAnimation, setSuccessAnimation] = useState<boolean>(false);
+  const [isShaking, setIsShaking] = useState<boolean>(false);
+  const [isCelebrating, setIsCelebrating] = useState<boolean>(false);
 
   // Set the first character as default when the list or word changes
   useEffect(() => {
@@ -48,10 +87,10 @@ export const StrokeOrderWriter: React.FC<StrokeOrderWriterProps> = ({ word, onCl
       height: 180,
       padding: 10,
       showOutline: showOutline,
-      strokeColor: '#dc2626', // Brand red (Red-600) for standard strokes
+      strokeColor: '#DE2910', // Brand red for standard strokes
       outlineColor: '#f1f5f9', // Slate-150 for skeleton outline
-      drawingColor: '#eab308', // Amber-500 for drawing brush
-      drawingWidth: 7,
+      drawingColor: '#1e293b', // Realistic deep ink black for calligraphy brush feel
+      drawingWidth: 14, // Thicker brush strokes (changed from 7)
       strokeAnimationSpeed: 1.2,
       delayBetweenStrokes: 100,
     });
@@ -79,11 +118,14 @@ export const StrokeOrderWriter: React.FC<StrokeOrderWriterProps> = ({ word, onCl
         },
         onMistake: (strokeData: any) => {
           // Play mistake feedback or flash Red
+          setIsShaking(true);
         },
         onComplete: (quizSummary: any) => {
           setQuizComplete(true);
+          playSuccessSound();
           setSuccessAnimation(true);
-          setTimeout(() => setSuccessAnimation(false), 2000);
+          setIsCelebrating(true);
+          setTimeout(() => setSuccessAnimation(false), 2050);
         },
       });
     } else {
@@ -139,18 +181,21 @@ export const StrokeOrderWriter: React.FC<StrokeOrderWriterProps> = ({ word, onCl
       <div className="absolute top-0 right-0 w-32 h-32 bg-amber-200/10 rounded-full blur-2xl pointer-events-none" />
 
       {/* Header Info */}
-      <div className="flex justify-between items-center z-10">
+      <div className="flex justify-between items-start z-10">
         <div>
           <div className="flex items-center gap-1.5 text-[9px] font-black uppercase text-brand-red tracking-widest">
             <Sparkles size={11} className="text-amber-500 animate-pulse" />
             Đồ họa nét viết chuẩn
           </div>
           <h4 className="text-base font-extrabold text-slate-800 mt-0.5">Tập viết từng chữ</h4>
+          <p className="text-[11px] text-amber-600 font-extrabold italic mt-1 leading-normal max-w-md">
+            💡 Muốn viết chữ nào, click vào chữ đó ở phần trên, chữ đó sẽ xuất hiện ở khung tập viết.
+          </p>
         </div>
         {onClose && (
           <button 
             onClick={onClose} 
-            className="text-xs font-black text-slate-400 hover:text-slate-600 transition-colors uppercase tracking-wider"
+            className="text-xs font-black text-slate-400 hover:text-slate-600 transition-colors uppercase tracking-wider mt-1"
           >
             Đóng
           </button>
@@ -197,9 +242,12 @@ export const StrokeOrderWriter: React.FC<StrokeOrderWriterProps> = ({ word, onCl
             </svg>
 
             {/* HanziWriter target drawing div */}
-            <div 
+            <motion.div 
               ref={containerRef} 
               id="hanzi-character-target" 
+              animate={isShaking ? { x: [-6, 6, -6, 6, -3, 3, 0] } : { x: 0 }}
+              transition={{ duration: 0.35, ease: "easeInOut" }}
+              onAnimationComplete={() => setIsShaking(false)}
               className="absolute inset-0 z-10 flex items-center justify-center cursor-crosshair"
             />
           </div>
@@ -293,6 +341,8 @@ export const StrokeOrderWriter: React.FC<StrokeOrderWriterProps> = ({ word, onCl
           Viết nháp lại
         </button>
       </div>
+
+      <Confetti active={isCelebrating} onComplete={() => setIsCelebrating(false)} />
     </div>
   );
 };

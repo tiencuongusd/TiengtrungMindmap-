@@ -59,7 +59,10 @@ function formatMindMapNode(node: MindMapNode): MindMapNode {
 }
 
 function formatLesson(lesson: Lesson): Lesson {
-  const originalTitle = lesson.title;
+  let originalTitle = lesson.title;
+  if (lesson.id >= 1001) {
+    originalTitle = originalTitle.replace(/^(từ vựng:\s*|từ vựng\s*)/i, '');
+  }
   const formattedTitle = formatVietnameseTitle(originalTitle);
   
   let formattedDescription = lesson.description;

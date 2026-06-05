@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { ChevronRight, Book, Lock } from 'lucide-react';
+import { ChevronRight, Book, Lock, BookOpen, Briefcase, Award } from 'lucide-react';
 import { LessonGroup } from '../types';
 import { cn } from '../lib/utils';
 
@@ -12,6 +12,7 @@ interface Props {
 export const GroupListView: React.FC<Props> = ({ groups, onSelect, isUnlocked = false }) => {
   const [highlightedId, setHighlightedId] = React.useState<number | null>(null);
   const [completedLessons, setCompletedLessons] = React.useState<number[]>([]);
+  const [activePart, setActivePart] = React.useState<'part1' | 'part2'>('part1');
 
   React.useEffect(() => {
     try {
@@ -58,23 +59,35 @@ export const GroupListView: React.FC<Props> = ({ groups, onSelect, isUnlocked = 
   }, [groupedByTopic]);
 
   const renderTopicSection = (topicId: string, topicData: { title: string; groups: LessonGroup[] }) => {
+    const isSpecialPart = Number(topicId) > 10;
+    
     return (
-      <div key={topicId} className="space-y-6">
-        <div className="flex items-center gap-6">
-          <div className="flex-none flex items-center justify-center w-10 h-10 text-white font-black text-lg italic shadow-lg bg-brand-red shadow-brand-red/20">
+      <div key={topicId} className="space-y-4">
+        {/* Topic Banner */}
+        <div className="flex items-center gap-4">
+          <div className={cn(
+            "flex-none flex items-center justify-center w-9 h-9 rounded-xl text-white font-extrabold text-sm border-2 border-white",
+            isSpecialPart 
+              ? "bg-duo-purple shadow-[0_4px_0_#8C1EDB]" 
+              : "bg-duo-green shadow-[0_4px_0_#46A302]"
+          )}>
             {topicId}
           </div>
-          <div className="flex-1 border-b border-black/10 pb-2">
-            <span className="text-[10px] font-black uppercase tracking-widest block mb-1 text-brand-red">
-              Chủ đề {topicId}
+          <div className="flex-1 border-b-2 border-duo-gray pb-1">
+            <span className={cn(
+              "text-[9px] font-black uppercase tracking-widest block mb-0.5",
+              isSpecialPart ? "text-duo-purple" : "text-duo-green"
+            )}>
+              CHỦ ĐỀ {topicId}
             </span>
-            <h2 className="text-2xl sm:text-3xl font-black uppercase tracking-tighter italic text-[#1A1A1A]">
+            <h2 className="text-base sm:text-lg font-black uppercase text-slate-800">
               {topicData.title}
             </h2>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
+        {/* Grid of Lesson Cards in Duolingo 3D Format */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {topicData.groups.map((group) => {
             const groupCompletedCount = group.lessonIds.filter(id => completedLessons.includes(id)).length;
             const totalCount = group.lessonIds.length;
@@ -89,94 +102,67 @@ export const GroupListView: React.FC<Props> = ({ groups, onSelect, isUnlocked = 
                 role="button"
                 tabIndex={0}
                 className={cn(
-                  "group flex flex-col sm:flex-row sm:items-center p-4 sm:p-5 bg-white border transition-all text-left shadow-sm hover:shadow-xl relative overflow-hidden cursor-pointer outline-none",
-                  isLocked ? "border-slate-200 bg-slate-50/10" : "border-black/10 hover:border-black",
-                  highlightedId === group.id && "ring-4 ring-brand-red ring-offset-2 z-10 scale-[1.02]"
+                  "group relative rounded-2xl bg-white border-2 border-duo-gray p-4 text-left transition-all duration-100 cursor-pointer outline-none select-none",
+                  isLocked 
+                    ? "bg-stone-50 border-stone-200" 
+                    : "border-b-4 hover:-translate-y-[2px] hover:border-b-6 hover:border-slate-400 active:translate-y-[2px] active:border-b-2 active:shadow-none shadow-[0_4px_0_#E5E5E5]",
+                  highlightedId === group.id && "ring-4 ring-duo-yellow z-10"
                 )}
               >
-                <div className="absolute top-0 right-0 p-4 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity pointer-events-none">
-                  {isLocked ? <Lock size={60} className="rotate-12 translate-x-4 -translate-y-4 text-slate-400" /> : <Book size={60} className="rotate-12 translate-x-4 -translate-y-4" />}
-                </div>
-                
-                <div className={cn(
-                  "absolute top-0 left-0 w-1.5 h-full opacity-0 transition-opacity group-hover:opacity-100",
-                  isLocked ? "bg-slate-400" : "bg-brand-red"
-                )} />
-                
-                <div className="flex-1 min-w-0 pr-4">
-                  <h3 className={cn(
-                    "text-lg sm:text-xl font-black tracking-tighter uppercase leading-tight transition-colors flex items-center gap-2",
-                    isLocked ? "text-slate-500" : "text-[#1A1A1A] group-hover:text-brand-red"
-                  )}>
-                    {group.id}. {group.title}
-                    {isLocked && <Lock size={16} className="text-slate-400 shrink-0 animate-pulse" />}
-                  </h3>
-                  
-                  <div className="mt-3 space-y-2">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-[10px] bg-black/5 px-2 py-0.5 font-bold uppercase tracking-wider text-black/60">
-                        {totalCount} Bài học
+                <div className="flex justify-between items-start gap-3">
+                  <div className="flex-1 min-w-0">
+                    <h3 className={cn(
+                      "text-sm sm:text-base font-black tracking-tight uppercase leading-snug flex items-center gap-1.5",
+                      isLocked ? "text-slate-450" : "text-slate-800 group-hover:text-duo-blue"
+                    )}>
+                      {group.id}. {group.title}
+                      {isLocked && <Lock size={12} className="text-slate-450 shrink-0" />}
+                    </h3>
+                    
+                    <div className="mt-2 flex items-center gap-1.5 flex-wrap">
+                      <span className="text-[9px] bg-slate-100 border border-slate-200/60 px-1.5 py-0.5 rounded-md font-extrabold uppercase tracking-wider text-slate-500">
+                        {totalCount} Bài Học
                       </span>
                       {groupCompletedCount > 0 && !isLocked && (
-                        <span className="text-[10px] bg-emerald-50 text-emerald-600 border border-emerald-600/10 px-2 py-0.5 font-bold uppercase tracking-wider">
-                          Đã học {groupCompletedCount}/{totalCount}
+                        <span className="text-[9px] bg-[#EFFFEC] text-[#58CC02] border border-[#58CC02]/20 px-1.5 py-0.5 rounded-md font-extrabold uppercase tracking-wider flex items-center gap-1">
+                          <Award size={10} className="text-duo-green fill-current" />
+                          ĐÃ HOÀN THÀNH {groupCompletedCount}/{totalCount}
                         </span>
                       )}
                       {isLocked && (
-                        <span className="text-[10px] bg-slate-100 text-slate-500 border border-slate-200/50 px-2 py-0.5 font-bold uppercase tracking-wider flex items-center gap-1">
-                          <Lock size={10} /> Đang Khóa
+                        <span className="text-[9px] bg-stone-100 text-stone-400 border border-stone-200/50 px-1.5 py-0.5 rounded-md font-black uppercase tracking-wider flex items-center gap-0.5">
+                          <Lock size={8} /> Đang khóa
                         </span>
                       )}
                     </div>
 
-                    {/* Progress Bar */}
-                    {!isLocked ? (
-                      totalCount > 0 ? (
-                        <div className="space-y-1">
-                          <div className="w-full max-w-xs h-1.5 bg-slate-100 rounded-full overflow-hidden relative">
-                            <div 
-                              className={cn(
-                                "h-full rounded-full transition-all duration-500",
-                                percent === 100 ? "bg-emerald-500" : "bg-brand-red"
-                              )}
-                              style={{ width: `${percent}%` }}
-                            />
-                          </div>
-                          <div className="flex justify-between items-center max-w-xs text-[9px] font-semibold text-slate-400">
-                            <span className="uppercase tracking-wider">Tiến độ</span>
-                            <span>{percent}%</span>
-                          </div>
+                    {/* Progress Bar with deep 3D Duolingo look */}
+                    {!isLocked && totalCount > 0 && (
+                      <div className="mt-4 w-full h-3 bg-slate-100 border border-slate-200/50 rounded-full overflow-hidden">
+                        <div 
+                          className={cn(
+                            "h-full rounded-full transition-all duration-500 relative flex justify-end items-center pr-1",
+                            percent === 100 
+                              ? "bg-duo-green border-b-2 border-duo-green-dark" 
+                              : "bg-duo-blue border-b-2 border-duo-blue-dark"
+                          )}
+                          style={{ width: `${percent}%` }}
+                        >
+                          <div className="w-1.5 h-1 bg-white/40 rounded-full absolute top-0.5 left-1 right-1 h-[2px]" />
                         </div>
-                      ) : (
-                        <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1">
-                          📚 Nội dung sắp cập nhật
-                        </div>
-                      )
-                    ) : (
-                      <div className="text-[11px] font-medium text-slate-400 flex items-center gap-1 bg-slate-100/50 p-2 rounded-lg border border-slate-200/30 w-fit">
-                        🔒 Nhập mật khẩu để mở khóa học
                       </div>
                     )}
                   </div>
-                </div>
 
-                <div className="flex items-center gap-4 mt-4 sm:mt-0 ml-auto sm:ml-0 overflow-hidden">
-                  <div className="hidden lg:flex flex-col items-end opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-4 group-hover:translate-x-0">
-                    <span className={cn(
-                      "text-[8px] font-black uppercase tracking-[0.2em] mb-1",
-                      isLocked ? "text-slate-400" : "text-brand-red"
+                  <div className="flex items-center gap-2 shrink-0">
+                    <div className={cn(
+                      "w-8 h-8 rounded-xl border-2 flex items-center justify-center transition-all duration-300 shadow-[0_2px_0_#E5E5E5]",
+                      isLocked 
+                        ? "bg-stone-100 border-stone-200 text-stone-400 shadow-none" 
+                        : "bg-white border-duo-gray text-slate-400 group-hover:bg-duo-blue group-hover:text-white group-hover:border-duo-blue-dark group-hover:shadow-[0_2px_0_#1899D6]"
                     )}>
-                      {isLocked ? "Mật khẩu" : "Mở bài học"}
-                    </span>
-                    <span className="text-[11px] font-bold text-slate-400">
-                      {isLocked ? "Nhập mã" : "Xem ngay"}
-                    </span>
-                  </div>
-                  <div className={cn(
-                    "w-10 h-10 rounded-full border flex items-center justify-center transition-all duration-300 transform group-hover:scale-105 border-black/5 text-black/20 group-hover:text-black group-hover:border-black group-hover:bg-black group-hover:text-white",
-                    isLocked && "group-hover:bg-slate-800 group-hover:text-white group-hover:border-slate-800"
-                  )}>
-                    {isLocked ? <Lock size={15} /> : <ChevronRight size={18} />}
+                      {isLocked ? <Lock size={12} /> : <ChevronRight size={14} className="stroke-[3]" />}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -188,34 +174,72 @@ export const GroupListView: React.FC<Props> = ({ groups, onSelect, isUnlocked = 
   };
 
   return (
-    <div className="space-y-16">
-      {/* SECTION 1: TIẾNG TRUNG CƠ BẢN */}
-      <div className="space-y-10">
-        <div className="border-l-4 border-slate-900 pl-4 py-1 flex items-baseline justify-between">
-          <div>
-            <span className="text-[10px] font-black uppercase tracking-[0.25em] text-slate-400 block mb-1">Cấp độ 1 • 100 Bộ từ vựng</span>
-            <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900 uppercase">Phần 1: Tiếng Trung Cơ Bản</h2>
-          </div>
-          <span className="hidden sm:inline text-xs font-mono font-bold text-slate-400 bg-slate-100 px-3 py-1.5 rounded-full">Chủ đề 01 - 10</span>
+    <div className="space-y-8">
+      {/* Category Tab Selector for Instant Discovery without Scrolling */}
+      <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-5 p-5 sm:p-6 bg-white border-2 border-duo-gray border-b-4 rounded-3xl">
+        <div className="space-y-1">
+          <h2 className="text-lg sm:text-xl font-black text-slate-800">LỘ TRÌNH CHINH PHỤC</h2>
+          <p className="text-xs text-duo-sub font-bold">Lĩnh hội từ vựng qua phương thức Duolingo vui nhộn & trực quan</p>
         </div>
         
-        <div className="space-y-12">
-          {part1Topics.map(([topicId, topicData]) => renderTopicSection(topicId, topicData))}
+        <div className="grid grid-cols-2 bg-slate-100/90 p-1 rounded-2xl gap-1 shrink-0 w-full lg:w-[480px]">
+          <button
+            onClick={() => setActivePart('part1')}
+            className={cn(
+              "px-2 py-3 sm:px-4 rounded-xl text-[10px] xs:text-[11px] sm:text-xs font-black uppercase tracking-wider transition-all duration-150 flex items-center justify-center gap-1.5 cursor-pointer text-center",
+              activePart === 'part1'
+                ? "bg-white text-slate-800 border-2 border-duo-gray border-b-4 shadow-[0_2.5px_0_#E5E5E5]"
+                : "text-slate-500 hover:text-slate-700 hover:bg-slate-200/50"
+            )}
+          >
+            <BookOpen size={13} className="stroke-[3] shrink-0" />
+            <span className="leading-tight">Dành cho Đời Thường</span>
+          </button>
+
+          <button
+            onClick={() => setActivePart('part2')}
+            className={cn(
+              "px-2 py-3 sm:px-4 rounded-xl text-[10px] xs:text-[11px] sm:text-xs font-black uppercase tracking-wider transition-all duration-150 flex items-center justify-center gap-1.5 cursor-pointer text-center",
+              activePart === 'part2'
+                ? "bg-white text-slate-800 border-2 border-duo-gray border-b-4 shadow-[0_2.5px_0_#E5E5E5]"
+                : "text-slate-500 hover:text-slate-700 hover:bg-slate-200/50"
+            )}
+          >
+            <Briefcase size={13} className="stroke-[3] shrink-0" />
+            <span className="leading-tight">Khối Chuyên Ngành</span>
+          </button>
         </div>
       </div>
 
-      {/* SECTION 2: TIẾNG TRUNG CHUYÊN NGÀNH */}
-      {part2Topics.length > 0 && (
-        <div className="space-y-10 pt-16 border-t border-slate-200">
-          <div className="border-l-4 border-brand-red pl-4 py-1 flex items-baseline justify-between">
+      {/* SECTION 1: TIẾNG TRUNG THÔNG DỤNG */}
+      {activePart === 'part1' && (
+        <div className="space-y-6 transition-all duration-300">
+          <div className="border-l-4 border-duo-green pl-4 py-0.5 flex items-baseline justify-between mb-4">
             <div>
-              <span className="text-[10px] font-black uppercase tracking-[0.25em] text-brand-red/60 block mb-1">Cấp độ 2 • 50 Bộ Chuyên Ngành</span>
-              <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-[#1A1A1A] uppercase">Phần 2: Tiếng Trung Chuyên Ngành</h2>
+              <span className="text-[9px] font-black uppercase tracking-[0.2em] text-duo-green block mb-0.5">CẤP ĐỘ 1 • 100 Bộ từ vựng</span>
+              <h2 className="text-lg sm:text-xl font-black text-slate-800 uppercase">Phần 1: TIẾNG TRUNG THÔNG DỤNG</h2>
             </div>
-            <span className="hidden sm:inline text-xs font-mono font-bold text-brand-red bg-red-50 text-brand-red/80 px-3 py-1.5 rounded-full">Chủ đề 11 - 15</span>
+            <span className="hidden sm:inline text-xs font-extrabold text-duo-green bg-[#EFFFEC] border border-[#58CC02]/10 px-3 py-1 rounded-full">Chủ đề 01 - 10</span>
+          </div>
+          
+          <div className="space-y-8">
+            {part1Topics.map(([topicId, topicData]) => renderTopicSection(topicId, topicData))}
+          </div>
+        </div>
+      )}
+
+      {/* SECTION 2: TIẾNG TRUNG CHUYÊN NGÀNH */}
+      {part2Topics.length > 0 && activePart === 'part2' && (
+        <div className="space-y-6 transition-all duration-300">
+          <div className="border-l-4 border-duo-purple pl-4 py-0.5 flex items-baseline justify-between mb-4">
+            <div>
+              <span className="text-[9px] font-black uppercase tracking-[0.2em] text-duo-purple block mb-0.5">CẤP ĐỘ 2 • 50 Bộ Chuyên Ngành</span>
+              <h2 className="text-lg sm:text-xl font-black text-slate-800 uppercase">Phần 2: TIẾNG TRUNG CHUYÊN NGÀNH</h2>
+            </div>
+            <span className="hidden sm:inline text-xs font-extrabold text-duo-purple bg-[#F8EFFF] border border-duo-purple/10 px-3 py-1 rounded-full">Chủ đề 11 - 15</span>
           </div>
 
-          <div className="space-y-12">
+          <div className="space-y-8">
             {part2Topics.map(([topicId, topicData]) => renderTopicSection(topicId, topicData))}
           </div>
         </div>

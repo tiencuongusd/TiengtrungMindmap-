@@ -1009,56 +1009,56 @@ export const groups: LessonGroup[] = [
     id: 124,
     topicId: 13,
     topicTitle: "TIẾNG TRUNG THƯƠNG MẠI & KINH DOANH",
-    title: "Nhặt hàng & Ra đơn",
-    description: "Quy trình lấy hàng theo phiếu yêu cầu, gom đơn và chuẩn bị đơn hàng.",
+    title: "Tiếp thị & Quảng cáo",
+    description: "Nhóm từ vựng và mẫu câu giao tiếp Tiếng Trung về chiến lược kinh doanh, xác định thị trường mục tiêu, chạy quảng cáo, chương trình khuyến mãi, định vị thương hiệu, mở rộng kênh bán hàng, chăm sóc khách hàng tiềm năng, dự toán ngân sách và tin tức truyền thông.",
     lessonIds: [1231, 1232, 1233, 1234, 1235, 1236, 1237, 1238, 1239, 1240]
   },
   {
     id: 125,
     topicId: 13,
     topicTitle: "TIẾNG TRUNG THƯƠNG MẠI & KINH DOANH",
-    title: "Đóng gói & Dán nhãn",
-    description: "Cách đóng thùng carton, quấn màng bọc PE và dán tem nhãn mã vạch vận chuyển.",
+    title: "Đàm phán thương mại",
+    description: "Nhóm từ vựng và mẫu câu giao tiếp Tiếng Trung về đàm phán điều kiện, nhượng bộ, làm việc vì lợi ích hai bên, thỏa hiệp, đồng thuận ý kiến chung, đánh giá tiến triển, giải quyết bế tắc, và ký kết thỏa thuận sơ bộ.",
     lessonIds: [1241, 1242, 1243, 1244, 1245, 1246, 1247, 1248, 1249, 1250]
   },
   {
     id: 126,
     topicId: 13,
     topicTitle: "TIẾNG TRUNG THƯƠNG MẠI & KINH DOANH",
-    title: "Xuất kho & Vận chuyển",
-    description: "Thủ tục xuất kho, ký nhận biên lai và bàn giao cho đơn vị vận tải.",
+    title: "Ký kết hợp đồng & Điều khoản",
+    description: "Nhóm từ vựng và mẫu câu giao tiếp Tiếng Trung về ký kết hợp đồng, bổ sung điều khoản, bảo đảm quyền lợi, thực hiện nghĩa vụ, chịu trách nhiệm vi phạm hợp đồng, thời gian hiệu lực, đóng dấu công ty, và giải quyết tranh chấp thông qua đàm phán hoặc trọng tài.",
     lessonIds: [1251, 1252, 1253, 1254, 1255, 1256, 1257, 1258, 1259, 1260]
   },
   {
     id: 127,
     topicId: 13,
     topicTitle: "TIẾNG TRUNG THƯƠNG MẠI & KINH DOANH",
-    title: "Thiết bị & Xe nâng",
-    description: "Vận hành xe nâng tay, xe nâng điện, pallet và các dụng cụ bốc dỡ.",
+    title: "Dịch vụ chăm sóc khách hàng",
+    description: "Nhóm từ vựng và mẫu câu giao tiếp Tiếng Trung về khảo sát độ hài lòng, tiếp nhận khiếu nại, phản hồi, chính sách hậu mãi, bồi thường, đường dây nóng hotline, và nâng cao lòng trung thành.",
     lessonIds: [1261, 1262, 1263, 1264, 1265, 1266, 1267, 1268, 1269, 1270]
   },
   {
     id: 128,
     topicId: 13,
     topicTitle: "TIẾNG TRUNG THƯƠNG MẠI & KINH DOANH",
-    title: "Chứng từ & Thủ tục",
-    description: "Cách xử lý hóa đơn, biên lai giao hàng và phiếu xuất kho tạm thời.",
+    title: "Mạng lưới quan hệ & Tiệc tùng kinh doanh",
+    description: "Nhóm từ vựng và mẫu câu giao tiếp Tiếng Trung về mở rộng mạng lưới quan hệ, tiệc tối chiêu đãi, cạn ly chúc mừng, giao lưu thân thiện, trò chuyện sâu sắc, thứ tự chúc rượu và tháp tùng khách hàng.",
     lessonIds: [1271, 1272, 1273, 1274, 1275, 1276, 1277, 1278, 1279, 1280]
   },
   {
     id: 129,
     topicId: 13,
     topicTitle: "TIẾNG TRUNG THƯƠNG MẠI & KINH DOANH",
-    title: "Xử lý Trả hàng & Sự cố",
-    description: "Quản lý quy trình hàng hoàn trả do lỗi ngoại quan hoặc sai lệch số lượng.",
+    title: "Nghiệp vụ ngân hàng & Tài chính doanh nghiệp",
+    description: "Nhóm từ vựng và mẫu câu giao tiếp Tiếng Trung về tài khoản ngân hàng, chuyển khoản, xuất hóa đơn VAT, mã số thuế doanh nghiệp, tiền mặt, quản lý chi phí giá thành sản xuất, tính tiền thuế và lập dự toán ngân sách.",
     lessonIds: [1281, 1282, 1283, 1284, 1285, 1286, 1287, 1288, 1289, 1290]
   },
   {
     id: 130,
     topicId: 13,
     topicTitle: "TIẾNG TRUNG THƯƠNG MẠI & KINH DOANH",
-    title: "An toàn Kho & 5S",
-    description: "Giữ gìn vệ sinh lối đi thoát hiểm, an toàn xếp chồng hành lý và phòng cháy.",
+    title: "Thương mại điện tử & Bán hàng trực tuyến",
+    description: "Nhóm từ vựng và mẫu câu giao tiếp Tiếng Trung về thương mại điện tử, quản lý gian hàng trực tuyến, giỏ hàng, liên hệ chăm sóc khách hàng trực tuyến, kỹ năng chốt đơn, đánh giá tốt năm sao, giao nhận phát hàng, mã vận đơn, chính sách đổi trả hàng và livestream bán hàng.",
     lessonIds: [1291, 1292, 1293, 1294, 1295, 1296, 1297, 1298, 1299, 1300]
   },
 

@@ -66,8 +66,8 @@ export const DictionaryView: React.FC<Props> = ({ lessons, onSelectLesson }) => 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
       <div className="text-center mb-12">
-        <div className="text-[10px] font-black text-brand-red uppercase tracking-[0.2em] mb-4">Từ điển MindMap</div>
-        <h2 className="text-4xl font-black text-slate-900 tracking-tighter uppercase mb-8">Tra cứu học tiếng Trung online</h2>
+        <div className="text-[10px] font-black text-duo-green uppercase tracking-[0.2em] mb-4">TỬ ĐIỂN MINDMAP</div>
+        <h2 className="text-3xl sm:text-4xl font-black text-slate-800 tracking-tight uppercase mb-8 font-sans">Tra cứu học tiếng Trung online</h2>
         
         <div className="relative group">
           <input 
@@ -75,12 +75,12 @@ export const DictionaryView: React.FC<Props> = ({ lessons, onSelectLesson }) => 
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="NHẬP TIẾNG VIỆT, TIẾNG TRUNG HOẶC PINYIN..."
-            className="w-full px-8 py-6 bg-white border-2 border-slate-200 rounded-[2rem] text-xl font-bold placeholder:text-slate-300 outline-none focus:border-amber-400 focus:ring-4 focus:ring-amber-400/10 transition-all shadow-sm"
+            className="w-full px-8 py-5 bg-white border-2 border-duo-gray border-b-6 rounded-[2rem] text-base md:text-lg font-black placeholder:text-slate-350 outline-none focus:border-slate-400 focus:shadow-sm transition-all text-center tracking-wide text-slate-800 uppercase"
           />
           <Search className={cn(
             "absolute right-8 top-1/2 -translate-y-1/2 transition-colors",
-            searchTerm ? "text-amber-500" : "text-slate-300"
-          )} size={28} />
+            searchTerm ? "text-duo-blue" : "text-slate-300"
+          )} size={24} />
         </div>
       </div>
 
@@ -104,7 +104,7 @@ export const DictionaryView: React.FC<Props> = ({ lessons, onSelectLesson }) => 
                       className={cn(
                         "transition-all duration-150 inline-block",
                         isHighlighted 
-                          ? "text-red-500 font-black scale-110 drop-shadow-[0_0_8px_rgba(239,68,68,0.5)]" 
+                          ? "text-duo-red font-black scale-110 drop-shadow-[0_0_8px_rgba(239,68,68,0.5)]" 
                           : "opacity-60"
                       )}
                     >
@@ -122,22 +122,22 @@ export const DictionaryView: React.FC<Props> = ({ lessons, onSelectLesson }) => 
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ delay: idx * 0.05 }}
-                  className="bg-white border border-slate-200 p-6 rounded-3xl flex flex-col md:flex-row md:items-center justify-between gap-6 hover:shadow-md hover:border-amber-200 transition-all hover:-translate-y-1 group"
+                  className="bg-white border-2 border-duo-gray border-b-4 p-5 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-6 hover:border-slate-400 transition-all duration-100 group select-none"
                 >
                   <div className="flex items-start gap-6 no-select">
                     <div className={cn(
-                      "min-w-[4.5rem] md:min-w-[6rem] h-20 px-3 flex items-center justify-center rounded-2xl border transition-colors",
+                      "min-w-[4.5rem] md:min-w-[5.5rem] h-16 px-3 flex items-center justify-center rounded-xl border-2 shadow-[0_2px_0_#E5E5E5] transition-colors",
                       isCurrentText 
-                        ? "bg-red-50/50 border-red-200" 
-                        : "bg-slate-50 border-slate-100 group-hover:bg-amber-50"
+                        ? "bg-[#FFFCE6] border-duo-yellow" 
+                        : "bg-slate-50 border-duo-gray group-hover:bg-[#EFFFEC] group-hover:border-duo-green"
                     )}>
-                      <span className="text-xl md:text-2xl chinese-char text-slate-800 text-center leading-tight">
+                      <span className="text-xl md:text-2xl chinese-char text-slate-800 text-center leading-none">
                         {renderChineseText()}
                       </span>
                     </div>
                     <div>
-                      <div className="flex items-center gap-3 mb-1">
-                        <span className="text-lg font-bold text-slate-800">{word.pinyin}</span>
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-base sm:text-lg font-black text-slate-800">{word.pinyin}</span>
                         <button 
                           onClick={() => {
                             if (isCurrentText) {
@@ -147,76 +147,76 @@ export const DictionaryView: React.FC<Props> = ({ lessons, onSelectLesson }) => 
                             }
                           }}
                           className={cn(
-                            "p-1.5 rounded-lg transition-all",
+                            "p-1.5 rounded-lg border-2 border-b-4 transition-all cursor-pointer",
                             isCurrentText
-                              ? "bg-red-50 text-red-600 animate-pulse"
-                              : "text-slate-300 hover:text-amber-500 hover:bg-amber-50"
+                              ? "bg-white border-duo-red text-duo-red shadow-[0_2px_0_#EA2B2B] active:translate-y-[2px] active:border-b-2"
+                              : "bg-white border-duo-gray text-slate-350 hover:text-duo-blue hover:border-duo-blue shadow-[0_2px_0_#E5E5E5] active:translate-y-[2px] active:border-b-2"
                           )}
                           title={isCurrentText ? "Dừng đọc" : "Đọc âm thanh"}
                         >
-                          {isCurrentText ? <VolumeX size={16} /> : <Volume2 size={16} />}
+                          {isCurrentText ? <VolumeX size={14} className="stroke-[3]" /> : <Volume2 size={14} className="stroke-[3]" />}
                         </button>
                       </div>
-                    <div className="flex items-center gap-2 text-amber-600 font-medium">
-                      <span>{word.vietnamese}</span>
-                      {word.hint && settings.showVietnameseHint !== false && <span className="text-xs text-slate-400 font-normal">({word.hint})</span>}
+                      <div className="flex items-center gap-2 text-duo-green font-black text-sm">
+                        <span>{word.vietnamese}</span>
+                        {word.hint && settings.showVietnameseHint !== false && <span className="text-xs text-duo-sub font-bold">({word.hint})</span>}
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div className="flex items-center gap-6">
-                  <div className="text-right">
-                    <span className="block text-[10px] font-black uppercase text-slate-400">Từ bài học</span>
-                    <span className="text-xs font-bold text-slate-600">{word.lessonTitle}</span>
+                  <div className="flex items-center gap-6">
+                    <div className="text-right">
+                      <span className="block text-[8px] font-black uppercase text-duo-sub tracking-wider">TỪ BÀI HỌC</span>
+                      <span className="text-xs font-black text-slate-600">{word.lessonTitle}</span>
+                    </div>
+                    <button 
+                      onClick={() => onSelectLesson(word.lessonId)}
+                      className="w-10 h-10 bg-white border-2 border-duo-gray border-b-4 hover:border-slate-400 active:translate-y-[2px] active:border-b-2 flex items-center justify-center rounded-xl text-slate-500 hover:text-slate-800 transition-all duration-100"
+                    >
+                      <ArrowRight size={18} className="stroke-[3]" />
+                    </button>
                   </div>
-                  <button 
-                    onClick={() => onSelectLesson(word.lessonId)}
-                    className="w-12 h-12 bg-slate-100 flex items-center justify-center rounded-2xl text-slate-400 hover:bg-[#1A1A1A] hover:text-white transition-all group/btn"
-                  >
-                    <ArrowRight size={20} className="group-hover/btn:translate-x-0.5 transition-transform" />
-                  </button>
-                </div>
               </motion.div>
-            );
-          })
+              );
+            })
           ) : searchTerm.trim() ? (
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="text-center py-20 bg-slate-50 rounded-[2.5rem] border-2 border-dashed border-slate-200"
+              className="text-center py-20 bg-stone-50 rounded-3xl border-2 border-dashed border-duo-gray"
             >
-              <div className="text-slate-300 font-black text-2xl uppercase tracking-tighter mb-2">Không tìm thấy kết quả</div>
-              <p className="text-slate-400 text-sm font-medium">Thử tìm kiếm theo cách khác nhé!</p>
+              <div className="text-slate-400 font-black text-base uppercase tracking-widest mb-2">Không tìm thấy kết quả</div>
+              <p className="text-duo-sub text-xs font-bold">Hãy tra cứu bằng từ ngữ khác xem nhé!</p>
             </motion.div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
-              <div className="bg-amber-50 border border-amber-100 p-8 rounded-[2rem]">
-                <h4 className="text-amber-800 font-black uppercase text-xs tracking-widest mb-4">Mẹo tra cứu</h4>
+              <div className="bg-[#FFFCE6] border-2 border-duo-yellow border-b-4 p-8 rounded-3xl">
+                <h4 className="text-duo-orange font-black uppercase text-[10px] tracking-widest mb-4">MẸO TRA CỨU DUOLINGO STYLE</h4>
                 <ul className="space-y-3">
-                  <li className="flex items-start gap-3 text-sm text-amber-700/70 font-medium">
-                    <div className="w-1.5 h-1.5 rounded-full bg-amber-400 mt-1.5" />
-                    Có thể gõ tiếng Việt không dấu
+                  <li className="flex items-start gap-3 text-xs text-duo-orange font-bold font-sans">
+                    <div className="w-2 h-2 rounded-full bg-duo-yellow mt-1 shrink-0" />
+                    Có thể gõ tiếng Việt không dấu, tìm cực nhanh!
                   </li>
-                  <li className="flex items-start gap-3 text-sm text-amber-700/70 font-medium">
-                    <div className="w-1.5 h-1.5 rounded-full bg-amber-400 mt-1.5" />
-                    Tìm kiếm theo Pinyin để luyện đọc
+                  <li className="flex items-start gap-3 text-xs text-duo-orange font-bold font-sans">
+                    <div className="w-2 h-2 rounded-full bg-duo-yellow mt-1 shrink-0" />
+                    Tìm kiếm theo Pinyin để luyện cách phát âm chuẩn xác.
                   </li>
-                  <li className="flex items-start gap-3 text-sm text-amber-700/70 font-medium">
-                    <div className="w-1.5 h-1.5 rounded-full bg-amber-400 mt-1.5" />
-                    Bấm vào tên bài học để xem MindMap
+                  <li className="flex items-start gap-3 text-xs text-duo-orange font-bold font-sans">
+                    <div className="w-2 h-2 rounded-full bg-duo-yellow mt-1 shrink-0" />
+                    Bấm vào mũi tên bài học để khám phá MindMap thông thái.
                   </li>
                 </ul>
               </div>
-              <div className="bg-slate-900 border border-slate-800 p-8 rounded-[2rem] flex flex-col justify-between">
+              <div className="bg-[#EFFFEC] border-2 border-duo-green border-b-4 p-8 rounded-3xl flex flex-col justify-between">
                 <div>
-                  <h4 className="text-white/40 font-black uppercase text-xs tracking-widest mb-4">Thống kê dữ liệu</h4>
-                  <div className="text-4xl font-black text-white tracking-tighter mb-2">{allWords.length}</div>
-                  <div className="text-xs font-bold text-white/30 uppercase tracking-widest">Từ vựng & Mẫu câu</div>
+                  <h4 className="text-duo-green font-black uppercase text-[10px] tracking-widest mb-4 font-sans">THỐNG KÊ KHO DỮ LIỆU</h4>
+                  <div className="text-4xl font-black text-slate-800 tracking-tight mb-2 font-mono">{allWords.length}</div>
+                  <div className="text-xs font-black text-duo-green uppercase tracking-widest font-sans">Từ vựng & Mẫu câu có sẵn</div>
                 </div>
-                <div className="mt-6 flex items-center justify-between text-amber-400">
-                  <span className="text-xs font-bold uppercase tracking-widest">Database sẵn sàng</span>
+                <div className="mt-6 flex items-center justify-between text-duo-green font-black text-xs font-sans">
+                  <span>HỌC BÁ ĐANG SẴN SÀNG</span>
                   <div className="flex gap-1">
-                    {[1,2,3,4].map(i => <div key={i} className="w-1 h-3 bg-amber-400 rounded-full" />)}
+                    {[1,2,3,4].map(i => <div key={i} className="w-1.5 h-3 bg-duo-green rounded-full animate-pulse" />)}
                   </div>
                 </div>
               </div>

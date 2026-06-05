@@ -12,7 +12,7 @@ export interface AudioSettings {
 const DEFAULT_SETTINGS: AudioSettings = {
   rate: 0.8,
   genderPreference: 'auto',
-  showVietnameseHint: true,
+  showVietnameseHint: false,
 };
 
 let settings: AudioSettings = { ...DEFAULT_SETTINGS };
@@ -110,6 +110,7 @@ export interface AudioPlayState {
   charIndex: number;
   charLength: number;
   isSpeaking: boolean;
+  isWordClick?: boolean;
 }
 
 let activePlaybackState: AudioPlayState = {
@@ -117,6 +118,7 @@ let activePlaybackState: AudioPlayState = {
   charIndex: -1,
   charLength: 0,
   isSpeaking: false,
+  isWordClick: false,
 };
 
 const listeners = new Set<(state: AudioPlayState) => void>();
@@ -162,10 +164,11 @@ export function stopChineseAudio() {
     charIndex: -1,
     charLength: 0,
     isSpeaking: false,
+    isWordClick: false,
   });
 }
 
-export function playChineseAudio(text: string) {
+export function playChineseAudio(text: string, isWordClick = false) {
   if (!window.speechSynthesis) {
     console.warn("Speech synthesis not supported");
     return;
@@ -184,6 +187,7 @@ export function playChineseAudio(text: string) {
     charIndex: -1,
     charLength: 0,
     isSpeaking: true,
+    isWordClick: isWordClick,
   });
 
   const utterance = new SpeechSynthesisUtterance(text);
@@ -328,6 +332,7 @@ export function playChineseAudio(text: string) {
       charIndex: -1,
       charLength: 0,
       isSpeaking: false,
+      isWordClick: false,
     });
   };
 
@@ -369,6 +374,7 @@ export function playChineseAudio(text: string) {
               charIndex: -1,
               charLength: 0,
               isSpeaking: false,
+              isWordClick: false,
             });
           }
         }, 150);

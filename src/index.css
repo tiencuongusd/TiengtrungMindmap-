@@ -1,13 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+SC:wght@400;700;900&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Nunito", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Playfair Display", serif;
   --font-chinese: "Noto Sans SC", sans-serif;
-  --color-brand-red: #DE2910;
-  --color-brand-stone: #F7F7F5;
-  --color-brand-paper: #FDFDFB;
-  --color-amber-node: #F59E0B;
+  --color-brand-red: #FE5F55;
+  --color-brand-stone: #FFFFFF;
+  --color-brand-paper: #FFFFFF;
+  --color-amber-node: #FF9600;
+  
+  /* Duolingo Colors */
+  --color-duo-green: #58CC02;
+  --color-duo-green-dark: #46A302;
+  --color-duo-blue: #1CB0F6;
+  --color-duo-blue-dark: #1899D6;
+  --color-duo-orange: #FF9600;
+  --color-duo-orange-dark: #E68500;
+  --color-duo-yellow: #FFC800;
+  --color-duo-yellow-dark: #E6B400;
+  --color-duo-red: #FF4B4B;
+  --color-duo-red-dark: #EA2B2B;
+  --color-duo-purple: #A435F0;
+  --color-duo-purple-dark: #8C1EDB;
+  --color-duo-gray: #E5E5E5;
+  --color-duo-text: #3C3C3C;
+  --color-duo-sub: #777777;
 }
 
 /* Protection Classes */
@@ -16,6 +34,27 @@
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
+}
+
+/* Duolingo style 3D buttons utility */
+.duo-btn-3d {
+  position: relative;
+  transition: all 0.1s ease;
+  border-bottom-width: 4px;
+}
+.duo-btn-3d:active {
+  transform: translateY(4px);
+  border-bottom-width: 0px;
+  margin-bottom: 4px;
+}
+
+/* Duolingo card styling with solid border instead of soft shadows */
+.duo-card {
+  border: 2px solid #E5E5E5;
+  border-bottom-width: 4px;
+  border-radius: 1.25rem;
+  background-color: #FFFFFF;
+  transition: all 0.2s ease;
 }
 
 .watermark-text {
@@ -32,19 +71,23 @@
 
 @layer base {
   body {
-    @apply bg-brand-stone text-[#1A1A1A] font-sans antialiased;
+    background-color: #FFFFFF;
+    color: #3C3C3C;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    antialiased: true;
   }
 }
 
 .paper-bg {
-  background-color: var(--color-brand-paper);
+  background-color: #FFFFFF;
   background-image: 
-    radial-gradient(#00000005 1.5px, transparent 1.5px);
+    radial-gradient(#E5E5E5 1.5px, transparent 1.5px);
   background-size: 24px 24px;
 }
 
 .text-meta {
-  @apply text-[10px] uppercase font-bold tracking-widest text-[#1A1A1A]/40;
+  @apply text-[10px] uppercase font-bold tracking-widest text-duo-sub/60;
 }
 
 .chinese-char {
@@ -54,12 +97,19 @@
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   @apply bg-transparent;
 }
 ::-webkit-scrollbar-thumb {
-  @apply bg-black/10 rounded-full hover:bg-black/20;
+  @apply bg-duo-gray rounded-full hover:bg-duo-sub/30;
+}
+
+/* Calligraphy Ink brush style shadow for Hanzi Writer drawing lines */
+.hanzi-writer-user-drawing-path {
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+  filter: drop-shadow(0 0.5px 1px rgba(15, 23, 42, 0.4)) blur(0.2px);
 }

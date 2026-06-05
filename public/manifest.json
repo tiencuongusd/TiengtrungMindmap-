@@ -1,0 +1,22 @@
+{
+  "name": "MindMap Chinese - Học Tiếng Trung Sơ Đồ Tư Duy",
+  "short_name": "MindMap CN",
+  "description": "Ứng dụng học tiếng Trung cơ bản, học từ vựng hiệu quả qua Sơ đồ tư duy độc đáo.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f8fafc",
+  "theme_color": "#e11d48",
+  "icons": [
+    {
+      "src": "https://img.icons8.com/color/192/china.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://img.icons8.com/color/512/china.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

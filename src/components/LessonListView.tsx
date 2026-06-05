@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BookOpen, ChevronRight, CheckCircle2, Lock, Sparkles } from 'lucide-react';
+import { BookOpen, ChevronRight, CheckCircle2, Lock, Sparkles, Star } from 'lucide-react';
 import { Lesson } from '../types';
 import { cn } from '../lib/utils';
 
@@ -32,8 +32,6 @@ export const LessonListView: React.FC<Props> = ({ lessons, onSelect, isUnlocked 
     }
   }, []);
 
-  const filteredLessons = lessons;
-
   const toggleComplete = (e: React.MouseEvent, id: number) => {
     e.stopPropagation();
     const next = completedLessons.includes(id) 
@@ -44,89 +42,113 @@ export const LessonListView: React.FC<Props> = ({ lessons, onSelect, isUnlocked 
   };
 
   return (
-    <div className="space-y-8">
-      <div className="space-y-12">
-        {filteredLessons.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredLessons.map((lesson) => {
-              const isLocked = lesson.id >= 51 && !isUnlocked;
-              return (
-                <div
-                  key={lesson.id}
-                  id={`lesson-${lesson.id}`}
-                  onClick={() => onSelect(lesson.id)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                      onSelect(lesson.id);
-                    }
-                  }}
-                  role="button"
-                  tabIndex={0}
-                  className={cn(
-                    "group flex items-center p-6 bg-white border transition-all text-left shadow-sm hover:shadow-xl relative overflow-hidden cursor-pointer outline-none focus:ring-2 focus:ring-brand-red/20",
-                    isLocked ? "border-slate-200/80 bg-slate-50/10" : (completedLessons.includes(lesson.id) ? "border-amber-400/30" : "border-black/10 hover:border-black"),
-                    highlightedId === lesson.id && "ring-4 ring-brand-red ring-offset-2 z-10 scale-[1.02]"
-                  )}
-                >
-                  <div className={cn(
-                    "absolute top-0 left-0 w-1 h-full transition-opacity",
-                    isLocked ? "bg-slate-300 opacity-60" : (completedLessons.includes(lesson.id) ? "bg-amber-400 opacity-100" : "bg-brand-red opacity-0 group-hover:opacity-100")
-                  )} />
-                  
-                  <div className="flex flex-col flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-[10px] font-black text-brand-red uppercase tracking-widest flex items-center gap-1.5">
+    <div className="space-y-6">
+      {lessons.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {lessons.map((lesson) => {
+            const isLocked = lesson.id >= 51 && !isUnlocked;
+            const isFinished = completedLessons.includes(lesson.id);
+            
+            return (
+              <div
+                key={lesson.id}
+                id={`lesson-${lesson.id}`}
+                onClick={() => onSelect(lesson.id)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    onSelect(lesson.id);
+                  }
+                }}
+                role="button"
+                tabIndex={0}
+                className={cn(
+                  "group relative rounded-2xl bg-white border-2 border-duo-gray p-4 text-left transition-all duration-100 cursor-pointer outline-none select-none",
+                  isLocked 
+                    ? "bg-stone-50 border-stone-200" 
+                    : "border-b-4 hover:-translate-y-[2px] hover:border-b-6 hover:border-slate-400 active:translate-y-[2px] active:border-b-2 active:shadow-none shadow-[0_4px_0_#E5E5E5]",
+                  isFinished && !isLocked && "border-duo-yellow hover:border-duo-yellow-dark shadow-[0_4px_0_#FFC800]",
+                  highlightedId === lesson.id && "ring-4 ring-duo-yellow z-10"
+                )}
+              >
+                <div className="flex flex-col h-full justify-between">
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className={cn(
+                        "text-[9px] font-black uppercase tracking-widest flex items-center gap-1",
+                        isFinished ? "text-duo-orange" : "text-duo-green"
+                      )}>
                         BÀI {String(lesson.id).padStart(3, '0')}
-                        {isLocked && <Lock size={10} className="text-slate-400 shrink-0" />}
+                        {isLocked && <Lock size={9} className="text-slate-450 shrink-0" />}
                       </span>
-                      {completedLessons.includes(lesson.id) && !isLocked && (
-                        <CheckCircle2 size={12} className="text-amber-500" />
+                      {isFinished && !isLocked && (
+                        <div className="bg-[#FFFCE6] text-duo-orange border border-duo-yellow/20 px-1.5 py-0.5 rounded-full flex items-center gap-1 text-[8px] font-black uppercase tracking-wider">
+                          <Star size={8} className="fill-current text-duo-yellow" /> HOÀN TẤT
+                        </div>
                       )}
                     </div>
-                    <h3 className={cn(
-                      "text-lg font-bold truncate tracking-tight transition-colors",
-                      isLocked ? "text-slate-500" : "text-[#1A1A1A] group-hover:text-brand-red"
+                    <h4 className={cn(
+                      "text-sm sm:text-base font-black tracking-tight line-clamp-2 leading-tight transition-colors mb-4",
+                      isLocked ? "text-stone-405" : "text-slate-800 group-hover:text-duo-blue"
                     )}>
                       {lesson.title}
-                    </h3>
-
+                    </h4>
                   </div>
 
-                  <div className="flex items-center gap-2">
-                    {!isLocked && (
+                  <div className="flex items-center justify-between mt-auto">
+                    {!isLocked ? (
                       <button 
                         onClick={(e) => toggleComplete(e, lesson.id)}
                         className={cn(
-                          "w-10 h-10 rounded-full border flex items-center justify-center transition-all",
-                          completedLessons.includes(lesson.id) 
-                            ? "border-amber-400 bg-amber-50 text-amber-500" 
-                            : "border-black/5 text-black/20 hover:text-black hover:border-black"
+                          "px-3 py-1.5 rounded-xl text-[9px] font-black uppercase tracking-wider flex items-center gap-1 cursor-pointer transition-all border-2 border-b-4",
+                          isFinished 
+                            ? "bg-[#FFFCE6] border-duo-yellow text-duo-orange shadow-[0_2.5px_0_#FFC800] active:translate-y-[2px] active:border-b-2" 
+                            : "bg-white border-duo-gray text-slate-500 hover:bg-slate-50 shadow-[0_2.5px_0_#E5E5E5] active:translate-y-[2px] active:border-b-2"
                         )}
-                        title={completedLessons.includes(lesson.id) ? 'Đánh dấu chưa học' : 'Đánh dấu đã học'}
+                        title={isFinished ? 'Đánh dấu chưa học' : 'Đánh dấu đã học'}
                       >
-                        {completedLessons.includes(lesson.id) ? <CheckCircle2 size={18} /> : <BookOpen size={18} />}
+                        {isFinished ? (
+                          <>
+                            <CheckCircle2 size={10} className="stroke-[3] text-duo-orange" />
+                            <span>Đã học</span>
+                          </>
+                        ) : (
+                          <>
+                            <BookOpen size={10} className="stroke-[3] text-slate-500" />
+                            <span>Chưa học</span>
+                          </>
+                        )}
                       </button>
+                    ) : (
+                      <div className="text-[10px] text-stone-400 font-extrabold flex items-center gap-1">
+                        <Lock size={10} /> ĐÃ KHÓA
+                      </div>
                     )}
-                    <div className="w-10 h-10 rounded-full border border-black/5 flex items-center justify-center text-black/20 group-hover:text-black group-hover:border-black transition-all">
-                      {isLocked ? <Lock size={15} className="text-slate-400" /> : <ChevronRight size={18} />}
+                    
+                    <div className={cn(
+                      "w-8 h-8 rounded-xl border-2 flex items-center justify-center shadow-[0_2px_0_#E5E5E5]",
+                      isLocked 
+                        ? "bg-slate-50 border-stone-200 text-stone-400 shadow-none animate-none" 
+                        : "bg-white border-duo-gray text-slate-400 group-hover:bg-duo-blue group-hover:text-white group-hover:border-duo-blue-dark group-hover:shadow-[0_2px_0_#1899D6]"
+                    )}>
+                      {isLocked ? <Lock size={12} /> : <ChevronRight size={14} className="stroke-[3]" />}
                     </div>
                   </div>
                 </div>
-              );
-            })}
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        <div className="w-full max-w-lg mx-auto py-16 px-8 bg-white border-2 border-duo-gray border-b-4 rounded-3xl text-center">
+          <div className="w-16 h-16 bg-[#FFF2F2] border-2 border-duo-red-dark text-duo-red rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-[0_4px_0_#EA2B2B]">
+            <Sparkles size={32} className="stroke-[2.5] animate-pulse" />
           </div>
-        ) : (
-          <div className="w-full max-w-lg mx-auto py-16 px-8 bg-white border border-slate-200/80 rounded-3xl text-center shadow-sm">
-            <div className="w-16 h-16 bg-red-50 text-brand-red rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-sm">
-              <Sparkles size={32} className="animate-pulse" />
-            </div>
-            <h3 className="text-xl font-black text-slate-800 tracking-tight uppercase mb-2">Đang Biên Soạn Bài Học</h3>
-            <p className="text-sm font-medium text-slate-500 leading-relaxed">
-              Các bài học, mẫu câu giao tiếp và sơ đồ tư duy MindMap cho chuyên ngành này đang được đội ngũ học thuật tổng hợp và thiết kế. Nội dung sẽ tự động cập nhật trong thời gian sớm nhất!
-            </p>
-          </div>
-        )}
-      </div>
+          <h3 className="text-lg font-black text-slate-800 tracking-tight uppercase mb-2">Đang Biên Soạn Bài Học</h3>
+          <p className="text-xs font-bold text-duo-sub leading-relaxed">
+            Các bài học, mẫu câu giao tiếp và sơ đồ tư duy MindMap cho chuyên ngành này đang được đội ngũ học thuật tổng hợp và thiết kế. Nội dung sẽ tự động cập nhật trong thời gian sớm nhất!
+          </p>
+        </div>
+      )}
     </div>
   );
 };

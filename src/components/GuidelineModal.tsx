@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { X, BookOpen, BrainCircuit, Volume2, HelpCircle, CheckCircle2, Flame, Award } from 'lucide-react';
+import { X, BookOpen, BrainCircuit, Award, Mail, Lock, Settings, Layers } from 'lucide-react';
 
 interface GuidelineModalProps {
   isOpen: boolean;
@@ -18,7 +18,7 @@ export const GuidelineModal: React.FC<GuidelineModalProps> = ({ isOpen, onClose 
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={onClose}
-        className="absolute inset-0 bg-slate-950/60 backdrop-blur-md"
+        className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"
       />
 
       {/* Modal Container */}
@@ -26,142 +26,139 @@ export const GuidelineModal: React.FC<GuidelineModalProps> = ({ isOpen, onClose 
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 20 }}
-        className="relative bg-white w-full max-w-2xl rounded-3xl shadow-2xl border border-slate-100 overflow-hidden max-h-[85vh] flex flex-col z-10"
+        className="relative bg-white w-full max-w-2xl rounded-3xl border-2 border-duo-gray border-b-6 overflow-hidden z-10 flex flex-col max-h-[90vh]"
       >
         {/* Header */}
-        <div className="p-6 md:p-8 border-b border-slate-100 flex items-center justify-between bg-slate-50 relative">
-          <div className="absolute top-0 right-16 w-24 h-24 bg-brand-red/5 rounded-full blur-xl pointer-events-none" />
-          
+        <div className="p-6 border-b-2 border-duo-gray flex items-center justify-between bg-white relative shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-brand-red/10 flex items-center justify-center text-brand-red">
-              <BrainCircuit size={22} className="animate-pulse" />
+            <div className="w-10 h-10 rounded-xl bg-[#EFFFEC] border-2 border-duo-green text-duo-green flex items-center justify-center shadow-[0_2px_0_#46A302]">
+              <BrainCircuit size={20} className="animate-pulse text-duo-green" />
             </div>
             <div>
-              <div className="text-[10px] font-black uppercase tracking-widest text-brand-red">Phương Pháp Tư Duy</div>
-              <h2 className="text-xl font-black text-slate-800 uppercase tracking-tight">Giới thiệu & Hướng dẫn học</h2>
+              <div className="text-[10px] font-black uppercase tracking-[0.14em] text-duo-green font-sans leading-none mb-1">PHƯƠNG PHÁP TƯ DUY</div>
+              <h2 className="text-base sm:text-lg font-black text-slate-800 uppercase tracking-tight font-sans leading-none">Giới thiệu &amp; Chương trình học</h2>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-slate-200/60 rounded-xl transition-colors text-slate-400 hover:text-slate-600 cursor-pointer"
+            className="w-9 h-9 border-2 border-duo-gray border-b-4 hover:border-slate-400 active:translate-y-[2px] active:border-b-2 rounded-xl text-slate-400 hover:text-slate-600 bg-white flex items-center justify-center transition-all cursor-pointer"
             aria-label="Đóng"
           >
-            <X size={20} />
+            <X size={16} className="stroke-[3]" />
           </button>
         </div>
 
         {/* Content */}
-        <div className="p-6 md:p-8 overflow-y-auto space-y-8 text-sm leading-relaxed text-slate-600 font-medium">
+        <div className="p-6 sm:p-8 space-y-6 text-xs sm:text-sm leading-relaxed text-slate-600 font-bold overflow-y-auto max-h-[60vh]">
           
           {/* Section 1: The Method */}
-          <div className="space-y-3">
+          <div className="space-y-2">
             <div className="flex items-center gap-2 text-slate-800">
-              <Award className="text-brand-red" size={18} />
-              <h3 className="font-black text-sm uppercase tracking-wider">Phương pháp MindMap Chinese là gì?</h3>
+              <Award className="text-duo-orange shrink-0 stroke-[2.5]" size={18} />
+              <h3 className="font-extrabold text-xs sm:text-sm uppercase tracking-wider text-slate-800 font-sans">Phương pháp MindMap Chinese là gì?</h3>
             </div>
-            <p className="text-slate-600 leading-relaxed pl-6">
-              Học từ vựng qua <span className="font-extrabold text-slate-800">Sơ đồ Tư duy (MindMap)</span> là phương pháp kết nối thông tin trực quan, 
-              kích thích sự hoạt động đồng bộ của cả hai bán cầu não học thuật và hình ảnh. 
-              Thay vì ghi nhớ rời rạc các chữ Hán riêng lẻ, não bộ của bạn sẽ liên kết <span className="text-brand-red font-bold">Từ chính (Từ gốc)</span> với các <span className="font-bold text-slate-800">Cụm từ ghép bổ trợ</span> và <span className="font-bold text-slate-800">Các ngữ động ví dụ thực tế</span>.
+            <p className="text-slate-500 font-bold leading-relaxed">
+              Học từ vựng qua <span className="font-black text-slate-800">Sơ đồ Tư duy (MindMap)</span> là kết nối trực quan sinh động, kích thích hoạt động đồng bộ của cả hai bán cầu não. Thay vì nhớ rời rạc, não bộ của bạn sẽ liên kết <span className="text-duo-orange font-black">Từ chính (Từ gốc)</span> với các <span className="font-black text-slate-800">Cụm từ ghép bổ trợ</span> và <span className="font-black text-slate-800">Ngữ cảnh ví dụ thực tế</span>.
             </p>
           </div>
 
-          {/* Core highlights grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="p-4 rounded-2xl bg-amber-50/40 border border-amber-100 flex gap-3">
-              <div className="shrink-0 text-amber-500 mt-0.5">
-                <Flame size={20} />
-              </div>
-              <div>
-                <h4 className="font-bold text-slate-800 text-xs uppercase tracking-wide mb-1">Ghi nhớ gấp 5 lần</h4>
-                <p className="text-xs text-slate-500 leading-relaxed">
-                  Liên kết ngữ cảnh thông minh tăng tốc khả năng lưu trữ thông tin của não bộ trung ương lên gấp 5 lần so với chép tay thông thường.
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-2xl bg-sky-50/40 border border-sky-100 flex gap-3">
-              <div className="shrink-0 text-sky-500 mt-0.5">
-                <Volume2 size={20} />
-              </div>
-              <div>
-                <h4 className="font-bold text-slate-800 text-xs uppercase tracking-wide mb-1">Âm thanh & highlight trực quan</h4>
-                <p className="text-xs text-slate-500 leading-relaxed">
-                  Kích hoạt phát âm chuẩn bản xứ một-chạm đồng bộ với việc tô màu nét chữ thời gian thực để khắc sâu cả <strong>Phát âm - Phiên âm - Chữ Hán</strong>.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Section 2: How to learn */}
-          <div className="space-y-4 pt-2 border-t border-slate-100">
+          {/* Section 2: Course Information */}
+          <div className="space-y-3 pt-4 border-t-2 border-duo-gray">
             <div className="flex items-center gap-2 text-slate-800">
-              <BookOpen className="text-brand-red" size={18} />
-              <h3 className="font-black text-sm uppercase tracking-wider">3 Bước Học Tối Ưu Hiệu Quả</h3>
+              <Layers className="text-duo-blue shrink-0 stroke-[2.5]" size={18} />
+              <h3 className="font-extrabold text-xs sm:text-sm uppercase tracking-wider text-slate-800 font-sans">Chương Trình Học Toàn Diện</h3>
             </div>
-
-            <div className="space-y-4 pl-6 relative before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-[2px] before:bg-slate-100">
-              
-              {/* Step 1 */}
-              <div className="relative flex gap-4">
-                <div className="absolute left-[-20px] w-6 h-6 rounded-full bg-brand-red/10 border-2 border-white flex items-center justify-center shrink-0 mt-0.5 text-brand-red font-black text-xs">
-                  1
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="p-4 rounded-2xl bg-stone-50 border-2 border-duo-gray">
+                <div className="font-black text-slate-800 text-xs uppercase tracking-wider mb-2 flex items-center gap-1.5 font-sans">
+                  <span className="w-2.5 h-2.5 bg-slate-500 rounded-full" />
+                  Phần 1: Cơ bản
                 </div>
-                <div>
-                  <h4 className="font-extrabold text-slate-800 uppercase text-xs tracking-wider mb-0.5">Quan sát & Liên tưởng Sơ đồ</h4>
-                  <p className="text-slate-500 text-xs leading-relaxed">
-                    Chọn một bài học từ danh sách, bấm chọn sơ đồ tư duy để phóng to/thu phóng. Hãy dành 1-2 phút quan sát nhánh tủa ra của các từ vựng để hiểu sự phát triển ý từ trung tâm ra bên ngoài.
-                  </p>
-                </div>
+                <ul className="space-y-1.5 text-xs text-duo-sub font-bold font-sans">
+                  <li>• <strong className="text-slate-700 font-black">10</strong> chủ đề học tập phong phú</li>
+                  <li>• <strong className="text-slate-700 font-black">100</strong> bài giảng mindmap</li>
+                  <li>• <strong className="text-slate-700 font-black">1.000</strong> từ vựng cốt lõi</li>
+                </ul>
               </div>
 
-              {/* Step 2 */}
-              <div className="relative flex gap-4">
-                <div className="absolute left-[-20px] w-6 h-6 rounded-full bg-brand-red/10 border-2 border-white flex items-center justify-center shrink-0 mt-0.5 text-brand-red font-black text-xs">
-                  2
+              <div className="p-4 rounded-2xl bg-[#EFFFEC] border-2 border-duo-green border-b-4">
+                <div className="font-black text-duo-green text-xs uppercase tracking-wider mb-2 flex items-center gap-1.5 font-sans">
+                  <span className="w-2.5 h-2.5 bg-duo-green rounded-full animate-pulse" />
+                  Phần 2: Chuyên ngành
                 </div>
-                <div>
-                  <h4 className="font-extrabold text-slate-800 uppercase text-xs tracking-wider mb-0.5">Chạm để nghe phát âm & nhìn highlight</h4>
-                  <p className="text-slate-500 text-xs leading-relaxed">
-                    Bấm vào từng nút chữ Hán, phiên âm. Lắng nghe cẩn thận audio, theo dõi vùng chữ được bôi màu nhấp nháy chạy mượt mà để đồng bộ thính giác & thị giác. Đọc to theo ngữ điệu máy phát ra.
-                  </p>
-                </div>
+                <ul className="space-y-1.5 text-xs text-duo-green-dark font-bold font-sans">
+                  <li>• <strong className="text-slate-800 font-black">5</strong> chủ đề chuyên môn đặc thù</li>
+                  <li>• <strong className="text-slate-800 font-black">50</strong> bài giảng thực nghiệm</li>
+                  <li>• <strong className="text-slate-800 font-black">500</strong> từ chuyên ngành cốt lõi</li>
+                </ul>
               </div>
-
-              {/* Step 3 */}
-              <div className="relative flex gap-4">
-                <div className="absolute left-[-20px] w-6 h-6 rounded-full bg-brand-red/10 border-2 border-white flex items-center justify-center shrink-0 mt-0.5 text-brand-red font-black text-xs">
-                  3
-                </div>
-                <div>
-                  <h4 className="font-extrabold text-slate-800 uppercase text-xs tracking-wider mb-0.5">Tra cứu phản xạ linh hoạt</h4>
-                  <p className="text-slate-500 text-xs leading-relaxed">
-                    Sử dụng tab <strong>TRA CỨU TỪ ĐIỂN</strong> hoặc thanh tìm kiếm để tìm lại các cụm từ, câu ví dụ đã học, thực hành tự kiểm định trí nhớ ngẫu nhiên để biến ngôn ngữ thành phản xạ vô điều kiện.
-                  </p>
-                </div>
-              </div>
-
             </div>
           </div>
 
-          {/* Golden Rule Tip */}
-          <div className="p-4 rounded-2xl bg-emerald-50/50 border border-emerald-250 flex gap-3 text-xs text-emerald-800 font-semibold leading-relaxed">
-            <CheckCircle2 size={18} className="shrink-0 mt-0.5 text-emerald-600" />
+          {/* Section 3: Content Structure */}
+          <div className="space-y-3 pt-4 border-t-2 border-duo-gray">
+            <div className="flex items-center gap-2 text-slate-800">
+              <BookOpen className="text-duo-purple shrink-0 stroke-[2.5]" size={18} />
+              <h3 className="font-extrabold text-xs sm:text-sm uppercase tracking-wider text-slate-800 font-sans">Cấu Trúc Nội Dung Bài Học</h3>
+            </div>
+            
+            <div className="space-y-2 pl-1">
+              <p className="text-xs sm:text-sm text-slate-500 font-bold">
+                Mỗi bài học được thiết kế chặt chẽ và nhất quán bao gồm các cấu phần giúp bạn học tập đa chiều:
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-600 pl-2 font-sans font-black">
+                <div className="flex items-center gap-1.5 text-slate-700">• Học Từ chính, Cụm từ &amp; ví dụ</div>
+                <div className="flex items-center gap-1.5 text-slate-700">• Phát âm chuẩn bản xứ</div>
+                <div className="flex items-center gap-1.5 text-slate-700">• Phiên bồi chuẩn &amp; dịch Việt</div>
+                <div className="flex items-center gap-1.5 text-slate-700">• Luyện viết chữ Hán cơ bản</div>
+              </div>
+              
+              <div className="p-4 bg-[#FFFCE6] border-2 border-duo-yellow border-b-4 rounded-2xl flex gap-3 text-xs text-duo-orange mt-3">
+                <Settings className="text-duo-orange shrink-0 mt-0.5 stroke-[2.5]" size={16} />
+                <div>
+                  <span className="font-black uppercase text-[10px] tracking-wider text-duo-orange-dark block mb-1 font-sans">CHÚ Ý VỀ PHIÊN ÂM BỒI ĐỘC QUYỀN</span>
+                  <p className="leading-relaxed font-bold font-sans text-xs">
+                    <strong className="font-black text-slate-800">Phiên âm bồi Tiếng Việt</strong> là công cụ hỗ trợ cực kỳ đắc lực cho người mới bắt đầu học để phản xạ nhanh. Đây chỉ là công cụ hỗ trợ trải nghiệm. Bạn có thể chủ động <strong className="font-black text-slate-800">Bật / Tắt phiên bồi này</strong> bất cứ lúc nào trong bảng <strong className="font-black text-slate-800">Cài đặt</strong> (bánh răng ở góc trên thanh công cụ) để luyện đọc pinyin chuyên nghiệp.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Section 4: Premium Info */}
+          <div className="space-y-3 pt-4 border-t-2 border-duo-gray">
+            <div className="flex items-center gap-2 text-slate-800">
+              <Lock className="text-duo-red shrink-0 stroke-[2.5]" size={18} />
+              <h3 className="font-extrabold text-xs sm:text-sm uppercase tracking-wider text-slate-800 font-sans">Chương Trình Học Premium</h3>
+            </div>
+            <div className="p-4 bg-[#FFF2F2] border-2 border-duo-red border-b-4 rounded-2xl space-y-2 text-xs text-duo-red-dark">
+              <p className="leading-relaxed font-bold font-sans">
+                Nhằm mang lại trải nghiệm khách quan, chương trình cung cấp <strong className="bg-[#FFFCE6] border border-duo-yellow text-[#B91C1C] px-1.5 py-0.5 rounded font-black font-sans">5 bài học đầu tiên hoàn toàn miễn phí</strong> để bạn tự luyện tập, trải nghiệm và đánh giá chất lượng.
+              </p>
+              <p className="leading-relaxed font-bold font-sans">
+                Kể từ bài số 6 trở đi, nội dung bài giảng sẽ được khóa lại. Nếu cảm thấy hài lòng và hữu ích cho quá trình chinh phục Tiếng Trung, bạn có thể vào mục <strong className="font-black text-slate-800">LIÊN HỆ</strong> trên thanh thực đơn để nhận hướng dẫn kích hoạt toàn bộ khóa học chỉ với một khoản đóng góp nhỏ <strong className="font-black text-[#B91C1C] text-sm">149.000 VNĐ</strong> (Phí kích hoạt một lần duy nhất, học vĩnh viễn và không phát sinh chi phí).
+              </p>
+            </div>
+          </div>
+
+          {/* Section 5: Email support */}
+          <div className="p-4 rounded-2xl bg-stone-50 border-2 border-duo-gray flex items-center gap-3 text-xs text-slate-500 font-bold font-sans">
+            <Mail size={16} className="text-slate-400 shrink-0 stroke-[2.5]" />
             <div>
-              <p className="font-bold text-emerald-900 mb-0.5">Bí quyết bỏ túi cực đỉnh</p>
-              Học <strong>15 phút đều đặn mỗi ngày</strong> hiệu quả hơn 3 tiếng dồn dập cuối tuần. Hãy vừa bấm sơ đồ vừa lẩm nhẩm đọc to thành tiếng theo nhịp điệu phát âm để kích hoạt vùng cơ phát âm phản xạ!
+              Mọi ý kiến đóng góp, phản hồi về bài học hoặc kỹ thuật xin vui lòng gửi thư điện tử chính thức: <a href="mailto:tiengtrungmindmap@gmail.com" className="font-black text-slate-800 hover:text-duo-red underline transition-colors">tiengtrungmindmap@gmail.com</a>
             </div>
           </div>
 
         </div>
 
         {/* Footer */}
-        <div className="p-6 bg-slate-50 border-t border-slate-100 flex items-center justify-end">
+        <div className="p-5 bg-white border-t-2 border-duo-gray flex items-center justify-end shrink-0">
           <button
             onClick={onClose}
-            className="px-6 py-2.5 bg-[#1A1A1A] hover:bg-brand-red text-white font-black text-xs uppercase tracking-widest rounded-xl transition-colors shadow-sm cursor-pointer"
+            className="w-full sm:w-auto px-6 py-3 bg-duo-green border-b-4 border-duo-green-dark hover:bg-[#62e403] active:translate-y-[2px] active:border-b-2 text-white font-black text-xs uppercase tracking-wider rounded-xl transition-all cursor-pointer font-sans text-center"
           >
-            Đầu óc thông suốt • Bắt đầu học
+            ĐẦU ÓC THÔNG SUỐT • BẮT ĐẦU HỌC NGAY
           </button>
         </div>
       </motion.div>
