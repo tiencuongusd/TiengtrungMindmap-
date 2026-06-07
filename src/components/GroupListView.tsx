@@ -1,15 +1,14 @@
 import React, { useMemo } from 'react';
-import { ChevronRight, Book, Lock, BookOpen, Briefcase, Award } from 'lucide-react';
+import { ChevronRight, Book, BookOpen, Briefcase, Award } from 'lucide-react';
 import { LessonGroup } from '../types';
 import { cn } from '../lib/utils';
 
 interface Props {
   groups: LessonGroup[];
   onSelect: (groupId: number) => void;
-  isUnlocked?: boolean;
 }
 
-export const GroupListView: React.FC<Props> = ({ groups, onSelect, isUnlocked = false }) => {
+export const GroupListView: React.FC<Props> = ({ groups, onSelect }) => {
   const [highlightedId, setHighlightedId] = React.useState<number | null>(null);
   const [completedLessons, setCompletedLessons] = React.useState<number[]>([]);
   const [activePart, setActivePart] = React.useState<'part1' | 'part2'>('part1');
@@ -92,7 +91,6 @@ export const GroupListView: React.FC<Props> = ({ groups, onSelect, isUnlocked = 
             const groupCompletedCount = group.lessonIds.filter(id => completedLessons.includes(id)).length;
             const totalCount = group.lessonIds.length;
             const percent = totalCount > 0 ? Math.round((groupCompletedCount / totalCount) * 100) : 0;
-            const isLocked = group.id >= 6 && !isUnlocked;
 
             return (
               <div
@@ -103,41 +101,30 @@ export const GroupListView: React.FC<Props> = ({ groups, onSelect, isUnlocked = 
                 tabIndex={0}
                 className={cn(
                   "group relative rounded-2xl bg-white border-2 border-duo-gray p-4 text-left transition-all duration-100 cursor-pointer outline-none select-none",
-                  isLocked 
-                    ? "bg-stone-50 border-stone-200" 
-                    : "border-b-4 hover:-translate-y-[2px] hover:border-b-6 hover:border-slate-400 active:translate-y-[2px] active:border-b-2 active:shadow-none shadow-[0_4px_0_#E5E5E5]",
+                  "border-b-4 hover:-translate-y-[2px] hover:border-b-6 hover:border-slate-400 active:translate-y-[2px] active:border-b-2 active:shadow-none shadow-[0_4px_0_#E5E5E5]",
                   highlightedId === group.id && "ring-4 ring-duo-yellow z-10"
                 )}
               >
                 <div className="flex justify-between items-start gap-3">
                   <div className="flex-1 min-w-0">
-                    <h3 className={cn(
-                      "text-sm sm:text-base font-black tracking-tight uppercase leading-snug flex items-center gap-1.5",
-                      isLocked ? "text-slate-450" : "text-slate-800 group-hover:text-duo-blue"
-                    )}>
+                    <h3 className="text-sm sm:text-base font-black tracking-tight uppercase leading-snug flex items-center gap-1.5 text-slate-800 group-hover:text-duo-blue">
                       {group.id}. {group.title}
-                      {isLocked && <Lock size={12} className="text-slate-450 shrink-0" />}
                     </h3>
                     
                     <div className="mt-2 flex items-center gap-1.5 flex-wrap">
                       <span className="text-[9px] bg-slate-100 border border-slate-200/60 px-1.5 py-0.5 rounded-md font-extrabold uppercase tracking-wider text-slate-500">
                         {totalCount} Bài Học
                       </span>
-                      {groupCompletedCount > 0 && !isLocked && (
+                      {groupCompletedCount > 0 && (
                         <span className="text-[9px] bg-[#EFFFEC] text-[#58CC02] border border-[#58CC02]/20 px-1.5 py-0.5 rounded-md font-extrabold uppercase tracking-wider flex items-center gap-1">
                           <Award size={10} className="text-duo-green fill-current" />
                           ĐÃ HOÀN THÀNH {groupCompletedCount}/{totalCount}
                         </span>
                       )}
-                      {isLocked && (
-                        <span className="text-[9px] bg-stone-100 text-stone-400 border border-stone-200/50 px-1.5 py-0.5 rounded-md font-black uppercase tracking-wider flex items-center gap-0.5">
-                          <Lock size={8} /> Đang khóa
-                        </span>
-                      )}
                     </div>
 
                     {/* Progress Bar with deep 3D Duolingo look */}
-                    {!isLocked && totalCount > 0 && (
+                    {totalCount > 0 && (
                       <div className="mt-4 w-full h-3 bg-slate-100 border border-slate-200/50 rounded-full overflow-hidden">
                         <div 
                           className={cn(
@@ -155,13 +142,8 @@ export const GroupListView: React.FC<Props> = ({ groups, onSelect, isUnlocked = 
                   </div>
 
                   <div className="flex items-center gap-2 shrink-0">
-                    <div className={cn(
-                      "w-8 h-8 rounded-xl border-2 flex items-center justify-center transition-all duration-300 shadow-[0_2px_0_#E5E5E5]",
-                      isLocked 
-                        ? "bg-stone-100 border-stone-200 text-stone-400 shadow-none" 
-                        : "bg-white border-duo-gray text-slate-400 group-hover:bg-duo-blue group-hover:text-white group-hover:border-duo-blue-dark group-hover:shadow-[0_2px_0_#1899D6]"
-                    )}>
-                      {isLocked ? <Lock size={12} /> : <ChevronRight size={14} className="stroke-[3]" />}
+                    <div className="w-8 h-8 rounded-xl border-2 flex items-center justify-center transition-all duration-300 shadow-[0_2px_0_#E5E5E5] bg-white border-duo-gray text-slate-400 group-hover:bg-duo-blue group-hover:text-white group-hover:border-duo-blue-dark group-hover:shadow-[0_2px_0_#1899D6]">
+                      <ChevronRight size={14} className="stroke-[3]" />
                     </div>
                   </div>
                 </div>

@@ -4,8 +4,8 @@ import { cn } from '../lib/utils';
 import { AudioSettingsModal } from './AudioSettings';
 
 interface Props {
-  activeTab: 'lessons' | 'vocab' | 'contact';
-  onTabChange: (tab: 'lessons' | 'vocab' | 'contact') => void;
+  activeTab: 'lessons' | 'vocab';
+  onTabChange: (tab: 'lessons' | 'vocab') => void;
 }
 
 export const Header: React.FC<Props> = ({ activeTab, onTabChange }) => {
@@ -14,7 +14,6 @@ export const Header: React.FC<Props> = ({ activeTab, onTabChange }) => {
   const tabs = [
     { id: 'lessons', label: 'BÀI HỌC', emoji: '🟢', icon: Library, activeColor: 'text-[#58CC02]' },
     { id: 'vocab', label: 'TRA CỨU', emoji: '🔍', icon: Compass, activeColor: 'text-[#1CB0F6]' },
-    { id: 'contact', label: 'PREMIUM ⭐', emoji: '👑', icon: Sparkles, activeColor: 'text-[#FF9600]' },
   ] as const;
 
   return (

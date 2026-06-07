@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import { BookOpen, ChevronRight, CheckCircle2, Lock, Sparkles, Star } from 'lucide-react';
+import { BookOpen, ChevronRight, CheckCircle2, Sparkles, Star } from 'lucide-react';
 import { Lesson } from '../types';
 import { cn } from '../lib/utils';
 
 interface Props {
   lessons: Lesson[];
   onSelect: (lessonId: number) => void;
-  isUnlocked?: boolean;
 }
 
-export const LessonListView: React.FC<Props> = ({ lessons, onSelect, isUnlocked = false }) => {
+export const LessonListView: React.FC<Props> = ({ lessons, onSelect }) => {
   const [highlightedId, setHighlightedId] = useState<number | null>(null);
   const [completedLessons, setCompletedLessons] = useState<number[]>(() => {
     const saved = localStorage.getItem('completed_lessons');
@@ -46,7 +45,6 @@ export const LessonListView: React.FC<Props> = ({ lessons, onSelect, isUnlocked 
       {lessons.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {lessons.map((lesson) => {
-            const isLocked = lesson.id >= 51 && !isUnlocked;
             const isFinished = completedLessons.includes(lesson.id);
             
             return (
@@ -63,10 +61,8 @@ export const LessonListView: React.FC<Props> = ({ lessons, onSelect, isUnlocked 
                 tabIndex={0}
                 className={cn(
                   "group relative rounded-2xl bg-white border-2 border-duo-gray p-4 text-left transition-all duration-100 cursor-pointer outline-none select-none",
-                  isLocked 
-                    ? "bg-stone-50 border-stone-200" 
-                    : "border-b-4 hover:-translate-y-[2px] hover:border-b-6 hover:border-slate-400 active:translate-y-[2px] active:border-b-2 active:shadow-none shadow-[0_4px_0_#E5E5E5]",
-                  isFinished && !isLocked && "border-duo-yellow hover:border-duo-yellow-dark shadow-[0_4px_0_#FFC800]",
+                  "border-b-4 hover:-translate-y-[2px] hover:border-b-6 hover:border-slate-400 active:translate-y-[2px] active:border-b-2 active:shadow-none shadow-[0_4px_0_#E5E5E5]",
+                  isFinished && "border-duo-yellow hover:border-duo-yellow-dark shadow-[0_4px_0_#FFC800]",
                   highlightedId === lesson.id && "ring-4 ring-duo-yellow z-10"
                 )}
               >
@@ -78,59 +74,44 @@ export const LessonListView: React.FC<Props> = ({ lessons, onSelect, isUnlocked 
                         isFinished ? "text-duo-orange" : "text-duo-green"
                       )}>
                         BÀI {String(lesson.id).padStart(3, '0')}
-                        {isLocked && <Lock size={9} className="text-slate-450 shrink-0" />}
                       </span>
-                      {isFinished && !isLocked && (
+                      {isFinished && (
                         <div className="bg-[#FFFCE6] text-duo-orange border border-duo-yellow/20 px-1.5 py-0.5 rounded-full flex items-center gap-1 text-[8px] font-black uppercase tracking-wider">
                           <Star size={8} className="fill-current text-duo-yellow" /> HOÀN TẤT
                         </div>
                       )}
                     </div>
-                    <h4 className={cn(
-                      "text-sm sm:text-base font-black tracking-tight line-clamp-2 leading-tight transition-colors mb-4",
-                      isLocked ? "text-stone-405" : "text-slate-800 group-hover:text-duo-blue"
-                    )}>
+                    <h4 className="text-sm sm:text-base font-black tracking-tight line-clamp-2 leading-tight transition-colors mb-4 text-slate-800 group-hover:text-duo-blue">
                       {lesson.title}
                     </h4>
                   </div>
 
                   <div className="flex items-center justify-between mt-auto">
-                    {!isLocked ? (
-                      <button 
-                        onClick={(e) => toggleComplete(e, lesson.id)}
-                        className={cn(
-                          "px-3 py-1.5 rounded-xl text-[9px] font-black uppercase tracking-wider flex items-center gap-1 cursor-pointer transition-all border-2 border-b-4",
-                          isFinished 
-                            ? "bg-[#FFFCE6] border-duo-yellow text-duo-orange shadow-[0_2.5px_0_#FFC800] active:translate-y-[2px] active:border-b-2" 
-                            : "bg-white border-duo-gray text-slate-500 hover:bg-slate-50 shadow-[0_2.5px_0_#E5E5E5] active:translate-y-[2px] active:border-b-2"
-                        )}
-                        title={isFinished ? 'Đánh dấu chưa học' : 'Đánh dấu đã học'}
-                      >
-                        {isFinished ? (
-                          <>
-                            <CheckCircle2 size={10} className="stroke-[3] text-duo-orange" />
-                            <span>Đã học</span>
-                          </>
-                        ) : (
-                          <>
-                            <BookOpen size={10} className="stroke-[3] text-slate-500" />
-                            <span>Chưa học</span>
-                          </>
-                        )}
-                      </button>
-                    ) : (
-                      <div className="text-[10px] text-stone-400 font-extrabold flex items-center gap-1">
-                        <Lock size={10} /> ĐÃ KHÓA
-                      </div>
-                    )}
+                    <button 
+                      onClick={(e) => toggleComplete(e, lesson.id)}
+                      className={cn(
+                        "px-3 py-1.5 rounded-xl text-[9px] font-black uppercase tracking-wider flex items-center gap-1 cursor-pointer transition-all border-2 border-b-4",
+                        isFinished 
+                          ? "bg-[#FFFCE6] border-duo-yellow text-duo-orange shadow-[0_2.5px_0_#FFC800] active:translate-y-[2px] active:border-b-2" 
+                          : "bg-white border-duo-gray text-slate-500 hover:bg-slate-50 shadow-[0_2.5px_0_#E5E5E5] active:translate-y-[2px] active:border-b-2"
+                      )}
+                      title={isFinished ? 'Đánh dấu chưa học' : 'Đánh dấu đã học'}
+                    >
+                      {isFinished ? (
+                        <>
+                          <CheckCircle2 size={10} className="stroke-[3] text-duo-orange" />
+                          <span>Đã học</span>
+                        </>
+                      ) : (
+                        <>
+                          <BookOpen size={10} className="stroke-[3] text-slate-500" />
+                          <span>Chưa học</span>
+                        </>
+                      )}
+                    </button>
                     
-                    <div className={cn(
-                      "w-8 h-8 rounded-xl border-2 flex items-center justify-center shadow-[0_2px_0_#E5E5E5]",
-                      isLocked 
-                        ? "bg-slate-50 border-stone-200 text-stone-400 shadow-none animate-none" 
-                        : "bg-white border-duo-gray text-slate-400 group-hover:bg-duo-blue group-hover:text-white group-hover:border-duo-blue-dark group-hover:shadow-[0_2px_0_#1899D6]"
-                    )}>
-                      {isLocked ? <Lock size={12} /> : <ChevronRight size={14} className="stroke-[3]" />}
+                    <div className="w-8 h-8 rounded-xl border-2 flex items-center justify-center shadow-[0_2px_0_#E5E5E5] bg-white border-duo-gray text-slate-400 group-hover:bg-duo-blue group-hover:text-white group-hover:border-duo-blue-dark group-hover:shadow-[0_2px_0_#1899D6]">
+                      <ChevronRight size={14} className="stroke-[3]" />
                     </div>
                   </div>
                 </div>

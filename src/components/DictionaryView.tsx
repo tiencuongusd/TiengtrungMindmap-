@@ -189,24 +189,7 @@ export const DictionaryView: React.FC<Props> = ({ lessons, onSelectLesson }) => 
               <p className="text-duo-sub text-xs font-bold">Hãy tra cứu bằng từ ngữ khác xem nhé!</p>
             </motion.div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
-              <div className="bg-[#FFFCE6] border-2 border-duo-yellow border-b-4 p-8 rounded-3xl">
-                <h4 className="text-duo-orange font-black uppercase text-[10px] tracking-widest mb-4">MẸO TRA CỨU DUOLINGO STYLE</h4>
-                <ul className="space-y-3">
-                  <li className="flex items-start gap-3 text-xs text-duo-orange font-bold font-sans">
-                    <div className="w-2 h-2 rounded-full bg-duo-yellow mt-1 shrink-0" />
-                    Có thể gõ tiếng Việt không dấu, tìm cực nhanh!
-                  </li>
-                  <li className="flex items-start gap-3 text-xs text-duo-orange font-bold font-sans">
-                    <div className="w-2 h-2 rounded-full bg-duo-yellow mt-1 shrink-0" />
-                    Tìm kiếm theo Pinyin để luyện cách phát âm chuẩn xác.
-                  </li>
-                  <li className="flex items-start gap-3 text-xs text-duo-orange font-bold font-sans">
-                    <div className="w-2 h-2 rounded-full bg-duo-yellow mt-1 shrink-0" />
-                    Bấm vào mũi tên bài học để khám phá MindMap thông thái.
-                  </li>
-                </ul>
-              </div>
+            <div className="max-w-md mx-auto mt-12 w-full">
               <div className="bg-[#EFFFEC] border-2 border-duo-green border-b-4 p-8 rounded-3xl flex flex-col justify-between">
                 <div>
                   <h4 className="text-duo-green font-black uppercase text-[10px] tracking-widest mb-4 font-sans">THỐNG KÊ KHO DỮ LIỆU</h4>

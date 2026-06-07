@@ -14,8 +14,21 @@ const Branch: React.FC<BranchProps> = ({ root }) => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full p-1">
           {root.children.map((level1) => (
             <div key={level1.id} className="flex flex-col gap-4 p-6 rounded-[2rem] bg-white/60 backdrop-blur-sm border border-slate-100 shadow-xl shadow-slate-200/45 hover:shadow-2xl hover:shadow-amber-100/10 transition-all duration-500">
-              {/* Level 1 Node (Sub-topic) */}
+              {/* Root Node (Từ chính) */}
+              <div className="w-full border-b border-slate-100 pb-4 mb-2">
+                <div className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-amber-600 mb-2 pl-3.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+                  Từ chính
+                </div>
+                <MindMapNode node={root} level={1} />
+              </div>
+
+              {/* Level 1 Node (Sub-topic / Từ phụ) */}
               <div className="w-full">
+                <div className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-emerald-600 mb-2 pl-3.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                  Từ phụ
+                </div>
                 <MindMapNode node={level1} level={1} />
               </div>
 

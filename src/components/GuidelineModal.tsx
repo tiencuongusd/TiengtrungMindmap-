@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { X, BookOpen, BrainCircuit, Award, Mail, Lock, Settings, Layers } from 'lucide-react';
+import { X, BookOpen, BrainCircuit, Award, Mail, Settings, Layers } from 'lucide-react';
 
 interface GuidelineModalProps {
   isOpen: boolean;
@@ -110,35 +110,19 @@ export const GuidelineModal: React.FC<GuidelineModalProps> = ({ isOpen, onClose 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-600 pl-2 font-sans font-black">
                 <div className="flex items-center gap-1.5 text-slate-700">• Học Từ chính, Cụm từ &amp; ví dụ</div>
                 <div className="flex items-center gap-1.5 text-slate-700">• Phát âm chuẩn bản xứ</div>
-                <div className="flex items-center gap-1.5 text-slate-700">• Phiên bồi chuẩn &amp; dịch Việt</div>
+                <div className="flex items-center gap-1.5 text-slate-700">• Phiên âm bồi dịch Việt</div>
                 <div className="flex items-center gap-1.5 text-slate-700">• Luyện viết chữ Hán cơ bản</div>
               </div>
               
               <div className="p-4 bg-[#FFFCE6] border-2 border-duo-yellow border-b-4 rounded-2xl flex gap-3 text-xs text-duo-orange mt-3">
                 <Settings className="text-duo-orange shrink-0 mt-0.5 stroke-[2.5]" size={16} />
                 <div>
-                  <span className="font-black uppercase text-[10px] tracking-wider text-duo-orange-dark block mb-1 font-sans">CHÚ Ý VỀ PHIÊN ÂM BỒI ĐỘC QUYỀN</span>
+                  <span className="font-black uppercase text-[10px] tracking-wider text-duo-orange-dark block mb-1 font-sans">CHÚ Ý VỀ PHIÊN ÂM BỒI </span>
                   <p className="leading-relaxed font-bold font-sans text-xs">
-                    <strong className="font-black text-slate-800">Phiên âm bồi Tiếng Việt</strong> là công cụ hỗ trợ cực kỳ đắc lực cho người mới bắt đầu học để phản xạ nhanh. Đây chỉ là công cụ hỗ trợ trải nghiệm. Bạn có thể chủ động <strong className="font-black text-slate-800">Bật / Tắt phiên bồi này</strong> bất cứ lúc nào trong bảng <strong className="font-black text-slate-800">Cài đặt</strong> (bánh răng ở góc trên thanh công cụ) để luyện đọc pinyin chuyên nghiệp.
+                    <strong className="font-black text-slate-800">Phiên âm bồi Tiếng Việt</strong> là công cụ hỗ trợ cho người mới bắt đầu học . Đây chỉ là công cụ hỗ trợ trải nghiệm. Bạn có thể chủ động <strong className="font-black text-slate-800">Bật / Tắt phiên bồi này</strong> bất cứ lúc nào trong bảng <strong className="font-black text-slate-800">Cài đặt</strong> (bánh răng ở góc trên thanh công cụ) để luyện đọc pinyin chuyên nghiệp.
                   </p>
                 </div>
               </div>
-            </div>
-          </div>
-
-          {/* Section 4: Premium Info */}
-          <div className="space-y-3 pt-4 border-t-2 border-duo-gray">
-            <div className="flex items-center gap-2 text-slate-800">
-              <Lock className="text-duo-red shrink-0 stroke-[2.5]" size={18} />
-              <h3 className="font-extrabold text-xs sm:text-sm uppercase tracking-wider text-slate-800 font-sans">Chương Trình Học Premium</h3>
-            </div>
-            <div className="p-4 bg-[#FFF2F2] border-2 border-duo-red border-b-4 rounded-2xl space-y-2 text-xs text-duo-red-dark">
-              <p className="leading-relaxed font-bold font-sans">
-                Nhằm mang lại trải nghiệm khách quan, chương trình cung cấp <strong className="bg-[#FFFCE6] border border-duo-yellow text-[#B91C1C] px-1.5 py-0.5 rounded font-black font-sans">5 bài học đầu tiên hoàn toàn miễn phí</strong> để bạn tự luyện tập, trải nghiệm và đánh giá chất lượng.
-              </p>
-              <p className="leading-relaxed font-bold font-sans">
-                Kể từ bài số 6 trở đi, nội dung bài giảng sẽ được khóa lại. Nếu cảm thấy hài lòng và hữu ích cho quá trình chinh phục Tiếng Trung, bạn có thể vào mục <strong className="font-black text-slate-800">LIÊN HỆ</strong> trên thanh thực đơn để nhận hướng dẫn kích hoạt toàn bộ khóa học chỉ với một khoản đóng góp nhỏ <strong className="font-black text-[#B91C1C] text-sm">149.000 VNĐ</strong> (Phí kích hoạt một lần duy nhất, học vĩnh viễn và không phát sinh chi phí).
-              </p>
             </div>
           </div>
 
