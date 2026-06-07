@@ -282,7 +282,7 @@ export const ListeningQuiz: React.FC<Props> = ({ lesson, onBackToMap, nextLesson
           >
             {/* Header Content */}
             <div className="p-6 pb-0">
-              {/* Custom Duolingo-styled Progress Bar */}
+              {/* Custom 3D-styled Progress Bar */}
               <div className="flex items-center gap-3 w-full mb-6">
                 <div className="flex-1 h-3.5 bg-slate-100 rounded-full overflow-hidden border-2 border-slate-200/40 p-[2px]">
                   <div

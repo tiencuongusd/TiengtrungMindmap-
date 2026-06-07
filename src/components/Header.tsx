@@ -20,7 +20,7 @@ export const Header: React.FC<Props> = ({ activeTab, onTabChange }) => {
     <>
       <header className="h-16 md:h-20 border-b-4 border-duo-gray bg-white sticky top-0 z-50 flex items-center justify-between px-4 md:px-10">
         <div className="flex items-center gap-2">
-          {/* Logo with Duolingo Mascot vibes (super cute Chinese Flag / Duo inspired colors) */}
+          {/* Green mascot/flag inspired brand logo */}
           <div className="w-9 h-9 md:w-11 md:h-11 bg-duo-green rounded-xl flex items-center justify-center font-black text-white text-base md:text-xl shadow-[0_4px_0_#46A302] border-2 border-white">
             中
           </div>
@@ -58,7 +58,7 @@ export const Header: React.FC<Props> = ({ activeTab, onTabChange }) => {
 
           <div className="w-px h-8 bg-duo-gray mx-1 hidden sm:block" />
 
-          {/* Quick Voice Selector in Duolingo style */}
+          {/* Quick Voice Selector settings button */}
           <button
             onClick={() => setIsSettingsOpen(true)}
             className="p-2 md:p-3 bg-white border-2 border-duo-gray hover:bg-slate-50 border-b-4 active:border-b-2 active:translate-y-0.5 rounded-xl md:rounded-2xl transition-all text-duo-sub hover:text-duo-blue cursor-pointer flex items-center justify-center"

@@ -85,7 +85,7 @@ export const GroupListView: React.FC<Props> = ({ groups, onSelect }) => {
           </div>
         </div>
 
-        {/* Grid of Lesson Cards in Duolingo 3D Format */}
+        {/* Grid of Lesson Cards in 3D Format */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {topicData.groups.map((group) => {
             const groupCompletedCount = group.lessonIds.filter(id => completedLessons.includes(id)).length;
@@ -123,7 +123,7 @@ export const GroupListView: React.FC<Props> = ({ groups, onSelect }) => {
                       )}
                     </div>
 
-                    {/* Progress Bar with deep 3D Duolingo look */}
+                    {/* Progress Bar with solid tactile look */}
                     {totalCount > 0 && (
                       <div className="mt-4 w-full h-3 bg-slate-100 border border-slate-200/50 rounded-full overflow-hidden">
                         <div 
@@ -161,7 +161,7 @@ export const GroupListView: React.FC<Props> = ({ groups, onSelect }) => {
       <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-5 p-5 sm:p-6 bg-white border-2 border-duo-gray border-b-4 rounded-3xl">
         <div className="space-y-1">
           <h2 className="text-lg sm:text-xl font-black text-slate-800">LỘ TRÌNH CHINH PHỤC</h2>
-          <p className="text-xs text-duo-sub font-bold">Lĩnh hội từ vựng qua phương thức Duolingo vui nhộn & trực quan</p>
+          <p className="text-xs text-duo-sub font-bold">Lĩnh hội từ vựng qua sơ đồ tư duy sinh động & trực quan</p>
         </div>
         
         <div className="grid grid-cols-2 bg-slate-100/90 p-1 rounded-2xl gap-1 shrink-0 w-full lg:w-[480px]">

@@ -197,16 +197,6 @@ export const FlashcardMode: React.FC<Props> = ({ lesson, onBackToMindmap, hideHe
     }, duration);
   };
 
-  // Autoplay character audio when showing Chinese-to-Vietnamese question
-  useEffect(() => {
-    if (currentQuestion && currentQuestion.type === 'zh-to-vi') {
-      const t = setTimeout(() => {
-        handlePlayAudio();
-      }, 400);
-      return () => clearTimeout(t);
-    }
-  }, [currentIndex, currentQuestion]);
-
   const handleSelectOption = (idx: number) => {
     if (isAnswered) return;
     setSelectedOptionIndex(idx);
@@ -305,7 +295,7 @@ export const FlashcardMode: React.FC<Props> = ({ lesson, onBackToMindmap, hideHe
           >
             {/* Upper Content Frame */}
             <div className="p-6 pb-0">
-              {/* Custom Duolingo-styled Progress Bar */}
+              {/* Custom 3D-styled Progress Bar */}
               <div className="flex items-center gap-3 w-full mb-6">
                 <div className="flex-1 h-3.5 bg-slate-100 rounded-full overflow-hidden border-2 border-slate-200/40 p-[2px]">
                   <div
@@ -431,7 +421,7 @@ export const FlashcardMode: React.FC<Props> = ({ lesson, onBackToMindmap, hideHe
               </div>
             </div>
 
-            {/* Answer Validation Footer Bar with Duolingo Colors */}
+            {/* Answer Validation Footer Bar with Brand Colors */}
             <div className={cn(
               "px-6 py-5 border-t-2 flex flex-col sm:flex-row items-center justify-between gap-4 transition-colors duration-150 rounded-b-[1.85rem]",
               isAnswered

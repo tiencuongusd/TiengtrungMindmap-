@@ -10,7 +10,7 @@
   --color-brand-paper: #FFFFFF;
   --color-amber-node: #FF9600;
   
-  /* Duolingo Colors */
+  /* Brand Colors */
   --color-duo-green: #58CC02;
   --color-duo-green-dark: #46A302;
   --color-duo-blue: #1CB0F6;
@@ -36,7 +36,7 @@
   -ms-user-select: none;
 }
 
-/* Duolingo style 3D buttons utility */
+/* Interactive 3D buttons utility */
 .duo-btn-3d {
   position: relative;
   transition: all 0.1s ease;
@@ -48,7 +48,7 @@
   margin-bottom: 4px;
 }
 
-/* Duolingo card styling with solid border instead of soft shadows */
+/* Card styling with solid border instead of soft shadows */
 .duo-card {
   border: 2px solid #E5E5E5;
   border-bottom-width: 4px;
