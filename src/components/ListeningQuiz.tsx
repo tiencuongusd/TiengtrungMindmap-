@@ -2,13 +2,15 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Volume2, CheckCircle2, XCircle, ArrowRight, RotateCcw, Award, Check, Sparkles, BookOpen } from 'lucide-react';
 import { Lesson, MindMapNode } from '../types';
-import { playChineseAudio } from '../lib/audio';
+import { playChineseAudio, playCorrectSound, playCelebrationSound } from '../lib/audio';
 import { Confetti } from './Confetti';
 import { cn } from '../lib/utils';
 
 interface Props {
   lesson: Lesson;
   onBackToMap?: () => void;
+  nextLesson?: Lesson | null;
+  onSelectNextLesson?: (id: number) => void;
 }
 
 interface QuizQuestion {
@@ -53,7 +55,7 @@ function flattenMindMapNodes(nodes: MindMapNode[]): MindMapNode[] {
   return result;
 }
 
-export const ListeningQuiz: React.FC<Props> = ({ lesson, onBackToMap }) => {
+export const ListeningQuiz: React.FC<Props> = ({ lesson, onBackToMap, nextLesson, onSelectNextLesson }) => {
   const [questions, setQuestions] = useState<QuizQuestion[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
@@ -65,6 +67,23 @@ export const ListeningQuiz: React.FC<Props> = ({ lesson, onBackToMap }) => {
   const [showSummary, setShowSummary] = useState(false);
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
   const [isConfettiActive, setIsConfettiActive] = useState(false);
+
+  // Mark the lesson completed in localStorage when user finishes
+  useEffect(() => {
+    if (showSummary) {
+      try {
+        const saved = localStorage.getItem('completed_lessons');
+        const completed: number[] = saved ? JSON.parse(saved) : [];
+        if (!completed.includes(lesson.id)) {
+          const nextCompleted = [...completed, lesson.id];
+          localStorage.setItem('completed_lessons', JSON.stringify(nextCompleted));
+          window.dispatchEvent(new Event('storage'));
+        }
+      } catch (e) {
+        console.error("Failed to save completed lesson", e);
+      }
+    }
+  }, [showSummary, lesson.id]);
 
   // Initialize and generate questions
   useEffect(() => {
@@ -178,6 +197,7 @@ export const ListeningQuiz: React.FC<Props> = ({ lesson, onBackToMap }) => {
     setIsAnswered(true);
 
     if (isAnsCorrect) {
+      playCorrectSound();
       setScore((prev) => prev + 1);
       setStreak((prev) => {
         const next = prev + 1;
@@ -199,7 +219,10 @@ export const ListeningQuiz: React.FC<Props> = ({ lesson, onBackToMap }) => {
       // Quiz finished!
       setShowSummary(true);
       if (score >= questions.length * 0.6) {
-        setIsConfettiActive(true);
+        setTimeout(() => {
+          setIsConfettiActive(true);
+          playCelebrationSound();
+        }, 1000);
       }
     }
   };
@@ -520,6 +543,33 @@ export const ListeningQuiz: React.FC<Props> = ({ lesson, onBackToMap }) => {
                 </button>
               )}
             </div>
+
+            {nextLesson && (
+              <div className="mt-6 pt-6 border-t-2 border-dashed border-slate-200 text-left">
+                <span className="text-[10px] font-black uppercase text-duo-green tracking-widest block mb-2 text-center sm:text-left font-sans">
+                  Bài học tiếp theo
+                </span>
+                <div 
+                  onClick={() => onSelectNextLesson?.(nextLesson.id)}
+                  className="group relative rounded-2xl bg-[#F7F9FC] border-2 border-[#E5E9F0] p-4 text-left transition-all duration-100 cursor-pointer outline-none select-none border-b-4 hover:-translate-y-[2px] hover:border-slate-400 active:translate-y-[2px] active:border-b-2 shadow-[0_3px_0_#E5E5E5] active:shadow-none"
+                >
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="min-w-0">
+                      <span className="text-[9px] font-black uppercase text-duo-orange tracking-widest block mb-0.5">
+                        Bài {String(nextLesson.id).padStart(3, '0')}
+                      </span>
+                      <h4 className="text-xs sm:text-sm font-black tracking-tight text-slate-800 line-clamp-2 leading-snug group-hover:text-duo-blue">
+                        {nextLesson.title}
+                      </h4>
+                    </div>
+                    
+                    <div className="w-8 h-8 rounded-xl border-2 flex items-center justify-center bg-white border-duo-gray text-slate-400 group-hover:bg-duo-blue group-hover:text-white group-hover:border-duo-blue-dark group-hover:shadow-[0_2px_0_#1899D6] shrink-0">
+                      <ArrowRight size={14} className="stroke-[3]" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </motion.div>
         )}
       </AnimatePresence>

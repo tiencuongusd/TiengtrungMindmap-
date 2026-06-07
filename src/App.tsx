@@ -120,6 +120,15 @@ export default function App() {
     [selectedLessonId]
   );
 
+  const nextLesson = useMemo(() => {
+    if (!selectedLessonId || filteredLessons.length === 0) return null;
+    const currentIndex = filteredLessons.findIndex(l => l.id === selectedLessonId);
+    if (currentIndex !== -1 && currentIndex + 1 < filteredLessons.length) {
+      return filteredLessons[currentIndex + 1];
+    }
+    return null;
+  }, [selectedLessonId, filteredLessons]);
+
   const playback = useAudioPlayback();
 
   // Automatically reset the active writing word to the lesson's main keyword on selection
@@ -155,7 +164,7 @@ export default function App() {
 
   const renderContent = () => {
     // Lesson Detail View
-    if (selectedLessonId && selectedLesson) {
+    if (activeTab === 'lessons' && selectedLessonId && selectedLesson) {
       return (
         <motion.div
           key="lesson-detail"
@@ -302,6 +311,8 @@ export default function App() {
                   <FlashcardMode 
                     lesson={selectedLesson} 
                     hideHeader={true}
+                    nextLesson={nextLesson}
+                    onSelectNextLesson={handleLessonSelect}
                   />
                 </motion.div>
               )}
@@ -318,6 +329,8 @@ export default function App() {
                   <ListeningQuiz
                     lesson={selectedLesson}
                     onBackToMap={() => setActiveSectionTab('mindmap')}
+                    nextLesson={nextLesson}
+                    onSelectNextLesson={handleLessonSelect}
                   />
                 </motion.div>
               )}
@@ -427,6 +440,8 @@ export default function App() {
         if (tab === 'lessons') {
           setSelectedLessonId(null);
           setSelectedGroupId(null);
+        } else if (tab === 'vocab') {
+          setSelectedLessonId(null);
         }
       }} />
 

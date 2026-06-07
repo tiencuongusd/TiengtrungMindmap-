@@ -394,3 +394,109 @@ export function playChineseAudio(text: string, isWordClick = false) {
 
   window.speechSynthesis.speak(utterance);
 }
+
+export function playCorrectSound() {
+  try {
+    const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+    if (!AudioContextClass) return;
+    const ctx = new AudioContextClass();
+    
+    const playTing = (freq: number, startTime: number, duration: number, volume: number) => {
+      const osc = ctx.createOscillator();
+      const gainNode = ctx.createGain();
+      
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, startTime);
+      
+      gainNode.gain.setValueAtTime(0, startTime);
+      gainNode.gain.linearRampToValueAtTime(volume, startTime + 0.02);
+      gainNode.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+      
+      osc.connect(gainNode);
+      gainNode.connect(ctx.destination);
+      
+      osc.start(startTime);
+      osc.stop(startTime + duration + 0.1);
+    };
+
+    // Upbeat minor-to-major ascending bell tone for a modern game sound effect (D6 to G6)
+    playTing(1174.66, ctx.currentTime, 0.4, 0.18);      // D6
+    playTing(1567.98, ctx.currentTime + 0.07, 0.5, 0.18); // G6
+  } catch (e) {
+    console.warn("Failed to play correct sound", e);
+  }
+}
+
+export function playCelebrationSound() {
+  try {
+    const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+    if (!AudioContextClass) return;
+    const ctx = new AudioContextClass();
+    const now = ctx.currentTime;
+
+    const playVoice = (startFreq: number, endFreq: number, startTime: number, duration: number, volume: number) => {
+      const osc = ctx.createOscillator();
+      const gainNode = ctx.createGain();
+      const vibrato = ctx.createOscillator();
+      const vibratoGain = ctx.createGain();
+
+      // Configure LFO for an excited vibrato ("zeeee" warble effect)
+      vibrato.frequency.setValueAtTime(18, startTime); // speed
+      vibratoGain.gain.setValueAtTime(20, startTime); // pitch swing depth
+
+      osc.type = 'triangle'; // crisp but warm wave
+      
+      // Sweeping frequency up
+      osc.frequency.setValueAtTime(startFreq, startTime);
+      osc.frequency.exponentialRampToValueAtTime(endFreq, startTime + 0.18);
+      
+      // Volume envelope with high attack and gradual decay
+      gainNode.gain.setValueAtTime(0, startTime);
+      gainNode.gain.linearRampToValueAtTime(volume, startTime + 0.04);
+      gainNode.gain.linearRampToValueAtTime(volume, startTime + duration - 0.25);
+      gainNode.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+
+      vibrato.connect(vibratoGain);
+      vibratoGain.connect(osc.frequency);
+      
+      osc.connect(gainNode);
+      gainNode.connect(ctx.destination);
+
+      vibrato.start(startTime);
+      osc.start(startTime);
+
+      vibrato.stop(startTime + duration + 0.1);
+      osc.stop(startTime + duration + 0.1);
+    };
+
+    // Ascending glorious major triad to celebrate!
+    playVoice(329.63, 659.25, now, 1.4, 0.10);        // E4 -> E5
+    playVoice(415.30, 830.61, now + 0.04, 1.4, 0.10); // G#4 -> G#5
+    playVoice(493.88, 987.77, now + 0.08, 1.4, 0.10); // B4 -> B5
+    playVoice(659.25, 1318.51, now + 0.12, 1.4, 0.08); // E5 -> E6
+    
+    // Play a delightful tiny high sparkle chime at the peak!
+    setTimeout(() => {
+      try {
+        const chimeCtx = new AudioContextClass();
+        const chimeOsc = chimeCtx.createOscillator();
+        const chimeGain = chimeCtx.createGain();
+        chimeOsc.type = 'sine';
+        chimeOsc.frequency.setValueAtTime(1975.53, chimeCtx.currentTime); // High B6
+        
+        chimeGain.gain.setValueAtTime(0, chimeCtx.currentTime);
+        chimeGain.gain.linearRampToValueAtTime(0.12, chimeCtx.currentTime + 0.02);
+        chimeGain.gain.exponentialRampToValueAtTime(0.001, chimeCtx.currentTime + 0.65);
+        
+        chimeOsc.connect(chimeGain);
+        chimeGain.connect(chimeCtx.destination);
+        chimeOsc.start();
+        chimeOsc.stop(chimeCtx.currentTime + 0.7);
+      } catch {}
+    }, 120);
+
+  } catch (e) {
+    console.warn("Failed to play celebration sound", e);
+  }
+}
+
