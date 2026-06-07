@@ -1062,167 +1062,167 @@ export const groups: LessonGroup[] = [
     lessonIds: [1291, 1292, 1293, 1294, 1295, 1296, 1297, 1298, 1299, 1300]
   },
 
-  // 4. TIẾNG TRUNG QA/QC & SẢN XUẤT
+  // 4. TIẾNG TRUNG DU LỊCH
   {
     id: 131,
     topicId: 14,
-    topicTitle: "TIẾNG TRUNG QA/QC & SẢN XUẤT",
-    title: "QA/QC & Sản xuất 1",
-    description: "Các mẫu câu và từ vựng chuyên ngành Quản lý chất lượng & Sản xuất",
-    lessonIds: []
+    topicTitle: "TIẾNG TRUNG DU LỊCH",
+    title: "Đón khách & Tập trung đoàn",
+    description: "Từ vựng về đón khách tại sân bay, hướng dẫn viên và thủ tục tập trung đoàn du lịch.",
+    lessonIds: [1301, 1302, 1303, 1304, 1305, 1306, 1307, 1308, 1309, 1310]
   },
   {
     id: 132,
     topicId: 14,
-    topicTitle: "TIẾNG TRUNG QA/QC & SẢN XUẤT",
-    title: "QA/QC & Sản xuất 2",
-    description: "Các mẫu câu và từ vựng chuyên ngành Quản lý chất lượng & Sản xuất",
-    lessonIds: []
+    topicTitle: "TIẾNG TRUNG DU LỊCH",
+    title: "Thủ tục tại sân bay & Lên máy bay",
+    description: "Bộ học tiếng Trung về công việc tại quầy làm thủ tục bay, kiểm tra hộ chiếu, ký gửi hành lý, nhận thẻ lên máy bay, đi qua an ninh và lên máy bay.",
+    lessonIds: [1311, 1312, 1313, 1314, 1315, 1316, 1317, 1318, 1319, 1320]
   },
   {
     id: 133,
     topicId: 14,
-    topicTitle: "TIẾNG TRUNG QA/QC & SẢN XUẤT",
-    title: "QA/QC & Sản xuất 3",
-    description: "Các mẫu câu và từ vựng chuyên ngành Quản lý chất lượng & Sản xuất",
-    lessonIds: []
+    topicTitle: "TIẾNG TRUNG DU LỊCH",
+    title: "Di chuyển bằng giao thông công cộng",
+    description: "Bộ học tiếng Trung về cách sử dụng tàu điện ngầm, xe buýt, taxi, mua vé, quẹt thẻ và các tình huống hỏi đường, đi nhầm đường.",
+    lessonIds: [1321, 1322, 1323, 1324, 1325, 1326, 1327, 1328, 1329, 1330]
   },
   {
     id: 134,
     topicId: 14,
-    topicTitle: "TIẾNG TRUNG QA/QC & SẢN XUẤT",
-    title: "QA/QC & Sản xuất 4",
-    description: "Các mẫu câu và từ vựng chuyên ngành Quản lý chất lượng & Sản xuất",
-    lessonIds: []
+    topicTitle: "TIẾNG TRUNG DU LỊCH",
+    title: "Nhận phòng & Dịch vụ khách sạn",
+    description: "Bộ học tiếng Trung về công việc nhận phòng khách sạn, đặt phòng trước, đặt cọc phòng, dùng thẻ phòng, ăn sáng, dịch vụ phòng, thiết bị dọn phòng, thủ tục trả phòng và hóa đơn.",
+    lessonIds: [1331, 1332, 1333, 1334, 1335, 1336, 1337, 1338, 1339, 1340]
   },
   {
     id: 135,
     topicId: 14,
-    topicTitle: "TIẾNG TRUNG QA/QC & SẢN XUẤT",
-    title: "QA/QC & Sản xuất 5",
-    description: "Các mẫu câu và từ vựng chuyên ngành Quản lý chất lượng & Sản xuất",
-    lessonIds: []
+    topicTitle: "TIẾNG TRUNG DU LỊCH",
+    title: "Hỏi đường & Định vị phương hướng",
+    description: "Bộ học tiếng Trung về hỏi vị trí khách sạn, trạm xe buýt, các hướng đi thẳng, rẽ trái, rẽ phải, cách đọc bản đồ giấy, bản đồ điện thoại, xử lý tình huống đi lạc đường và băng qua đường.",
+    lessonIds: [1341, 1342, 1343, 1344, 1345, 1346, 1347, 1348, 1349, 1350]
   },
   {
     id: 136,
     topicId: 14,
-    topicTitle: "TIẾNG TRUNG QA/QC & SẢN XUẤT",
-    title: "QA/QC & Sản xuất 6",
-    description: "Các mẫu câu và từ vựng chuyên ngành Quản lý chất lượng & Sản xuất",
-    lessonIds: []
+    topicTitle: "TIẾNG TRUNG DU LỊCH",
+    title: "Trải nghiệm ẩm thực & Gọi món",
+    description: "Bộ học tiếng Trung về trải nghiệm ẩm thực, cách gọi món, xem thực đơn, các món đặc sản, khẩu vị như ngọt, chua, cay, các loại nước uống, thanh toán tiền ăn và nhận hóa đơn.",
+    lessonIds: [1351, 1352, 1353, 1354, 1355, 1356, 1357, 1358, 1359, 1360]
   },
   {
     id: 137,
     topicId: 14,
-    topicTitle: "TIẾNG TRUNG QA/QC & SẢN XUẤT",
-    title: "QA/QC & Sản xuất 7",
-    description: "Các mẫu câu và từ vựng chuyên ngành Quản lý chất lượng & Sản xuất",
-    lessonIds: []
+    topicTitle: "TIẾNG TRUNG DU LỊCH",
+    title: "Tham quan danh lam thắng cảnh",
+    description: "Bộ học tiếng Trung về trải nghiệm tham quan thắng cảnh, cách mua vé vào cửa và phí vé, trao đổi với hướng dẫn viên, chụp ảnh kỉ niệm, cách đọc bản đồ du lịch, biển báo cấm sờ, tìm lối ra vào và nhà vệ sinh.",
+    lessonIds: [1361, 1362, 1363, 1364, 1365, 1366, 1367, 1368, 1369, 1370]
   },
   {
     id: 138,
     topicId: 14,
-    topicTitle: "TIẾNG TRUNG QA/QC & SẢN XUẤT",
-    title: "QA/QC & Sản xuất 8",
-    description: "Các mẫu câu và từ vựng chuyên ngành Quản lý chất lượng & Sản xuất",
-    lessonIds: []
+    topicTitle: "TIẾNG TRUNG DU LỊCH",
+    title: "Mua sắm quà lưu niệm & Mặc cả",
+    description: "Bộ học tiếng Trung về trải nghiệm mua sắm quà lưu niệm, cách hỏi giá bao nhiêu tiền, chê đắt quá, yêu cầu rẻ một chút, thử đồ, mặc cả trả giá, kích cỡ size, màu sắc, kiểm tra chất lượng sản phẩm và quầy tính tiền.",
+    lessonIds: [1371, 1372, 1373, 1374, 1375, 1376, 1377, 1378, 1379, 1380]
   },
   {
     id: 139,
     topicId: 14,
-    topicTitle: "TIẾNG TRUNG QA/QC & SẢN XUẤT",
-    title: "QA/QC & Sản xuất 9",
-    description: "Các mẫu câu và từ vựng chuyên ngành Quản lý chất lượng & Sản xuất",
-    lessonIds: []
+    topicTitle: "TIẾNG TRUNG DU LỊCH",
+    title: "Xử lý khẩn cấp & Sự cố",
+    description: "Bộ học tiếng Trung về kỹ năng ứng biến và các mẫu câu xử lý khẩn cấp khi bị lạc đường, mất hộ chiếu, đi bệnh viện, đau bụng mệt mỏi, gọi cảnh sát báo án, nhờ vả giúp đỡ, thất lạc hành lý tiền bạc và nhận biết các cảnh báo nguy hiểm.",
+    lessonIds: [1381, 1382, 1383, 1384, 1385, 1386, 1387, 1388, 1389, 1390]
   },
   {
     id: 140,
     topicId: 14,
-    topicTitle: "TIẾNG TRUNG QA/QC & SẢN XUẤT",
-    title: "QA/QC & Sản xuất 10",
-    description: "Các mẫu câu và từ vựng chuyên ngành Quản lý chất lượng & Sản xuất",
-    lessonIds: []
+    topicTitle: "TIẾNG TRUNG DU LỊCH",
+    title: "Kết thúc chuyến đi & Tạm biệt",
+    description: "Bộ học tiếng Trung về trải nghiệm kết thúc lịch trình, chúc nhau thượng lộ bình an, mua sắm đặc sản địa phương làm quà tặng, di chuyển ra sân bay, kiểm tra và thay đổi thời gian về nước, bày tỏ lòng cảm ơn và chúc sức khỏe bình an.",
+    lessonIds: [1391, 1392, 1393, 1394, 1395, 1396, 1397, 1398, 1399, 1400]
   },
 
-  // 5. TIẾNG TRUNG XUẤT NHẬP KHẨU
+  // 5. TIẾNG TRUNG CHUYÊN NGÀNH DỰ ÁN ĐẦU TƯ
   {
     id: 141,
     topicId: 15,
-    topicTitle: "TIẾNG TRUNG XUẤT NHẬP KHẨU",
-    title: "Xuất Nhập Khẩu 1",
-    description: "Các mẫu câu và từ vựng chuyên ngành Xuất nhập khẩu & Ngoại thương",
-    lessonIds: []
+    topicTitle: "TIẾNG TRUNG CHUYÊN NGÀNH DỰ ÁN ĐẦU TƯ",
+    title: "Khảo sát thị trường & Tìm kiếm vị trí",
+    description: "Bộ học tiếng Trung về tìm kiếm khu công nghiệp thích hợp, khảo sát cơ sở hạ tầng, kế hoạch thuê đất, tính toán giá điện nước, chính sách ưu đãi, tình trạng giao thông, nguồn lao động địa phương và phân tích môi trường đầu tư.",
+    lessonIds: [1401, 1402, 1403, 1404, 1405, 1406, 1407, 1408, 1409, 1410]
   },
   {
     id: 142,
     topicId: 15,
-    topicTitle: "TIẾNG TRUNG XUẤT NHẬP KHẨU",
-    title: "Xuất Nhập Khẩu 2",
-    description: "Các mẫu câu và từ vựng chuyên ngành Xuất nhập khẩu & Ngoại thương",
-    lessonIds: []
+    topicTitle: "TIẾNG TRUNG CHUYÊN NGÀNH DỰ ÁN ĐẦU TƯ",
+    title: "Hình thức đầu tư & Thành lập doanh nghiệp",
+    description: "Bộ học tiếng Trung về thành lập công ty vốn nước ngoài, công ty trách nhiệm hữu hạn, đối tác liên doanh, thông tin người đại diện pháp luật, chỉnh sửa vốn điều lệ, xin cấp giấy phép kinh doanh, danh sách cổ đông, điều lệ công ty, quản lý con dấu và mở tài khoản ngân hàng.",
+    lessonIds: [1411, 1412, 1413, 1414, 1415, 1416, 1417, 1418, 1419, 1420]
   },
   {
     id: 143,
     topicId: 15,
-    topicTitle: "TIẾNG TRUNG XUẤT NHẬP KHẨU",
-    title: "Xuất Nhập Khẩu 3",
-    description: "Các mẫu câu và từ vựng chuyên ngành Xuất nhập khẩu & Ngoại thương",
-    lessonIds: []
+    topicTitle: "TIẾNG TRUNG CHUYÊN NGÀNH DỰ ÁN ĐẦU TƯ",
+    title: "Thủ tục xin giấy phép đầu tư",
+    description: "Bộ học tiếng Trung về quy trình làm giấy chứng nhận đăng ký đầu tư, hỏi đáp cơ quan phê duyệt, chuẩn bị hồ sơ dự án, sử dụng và quản lý con dấu công ty, kiểm tra mã số thuế, thẩm định dự án, đánh giá tác động môi trường (ĐTM), thay đổi vốn đầu tư, soạn thảo bản giải trình kinh tế kỹ thuật và làm việc với ban quản lý khu công nghiệp.",
+    lessonIds: [1421, 1422, 1423, 1424, 1425, 1426, 1427, 1428, 1429, 1430]
   },
   {
     id: 144,
     topicId: 15,
-    topicTitle: "TIẾNG TRUNG XUẤT NHẬP KHẨU",
-    title: "Xuất Nhập Khẩu 4",
-    description: "Các mẫu câu và từ vựng chuyên ngành Xuất nhập khẩu & Ngoại thương",
-    lessonIds: []
+    topicTitle: "TIẾNG TRUNG CHUYÊN NGÀNH DỰ ÁN ĐẦU TƯ",
+    title: "Đánh giá tác động môi trường & PCCC",
+    description: "Bộ học tiếng Trung về chuẩn bị và sửa đổi báo cáo đánh giá tác động môi trường (ĐTM), quản lý hệ thống xử lý nước thải, kiểm tra tiêu chuẩn khí thải, xin giấy phép phòng cháy chữa cháy (PCCC), thẩm duyệt thiết kế PCCC, đầu tư mua sắm và kiểm tra các thiết bị chữa cháy, xử lý lỗi hệ thống báo cháy tự động, quản lý chất thải nguy hại và tiến hành nghiệm thu PCCC định kỳ.",
+    lessonIds: [1431, 1432, 1433, 1434, 1435, 1436, 1437, 1438, 1439, 1440]
   },
   {
     id: 145,
     topicId: 15,
-    topicTitle: "TIẾNG TRUNG XUẤT NHẬP KHẨU",
-    title: "Xuất Nhập Khẩu 5",
-    description: "Các mẫu câu và từ vựng chuyên ngành Xuất nhập khẩu & Ngoại thương",
-    lessonIds: []
+    topicTitle: "TIẾNG TRUNG CHUYÊN NGÀNH DỰ ÁN ĐẦU TƯ",
+    title: "Thiết kế & Đấu thầu xây dựng",
+    description: "Bộ học tiếng Trung về phân tích và kiểm tra bản vẽ thiết kế, tìm kiếm tổng thầu thi công, chuẩn bị hồ sơ mời thầu, nhận kết quả trúng thầu, làm việc với đơn vị giám sát chất lượng, lựa chọn nhà thầu phụ, thẩm duyệt dự toán công trình, kiểm tra bản vẽ thi công và đánh giá các tiêu chuẩn chất lượng xây dựng.",
+    lessonIds: [1441, 1442, 1443, 1444, 1445, 1446, 1447, 1448, 1449, 1450]
   },
   {
     id: 146,
     topicId: 15,
-    topicTitle: "TIẾNG TRUNG XUẤT NHẬP KHẨU",
-    title: "Xuất Nhập Khẩu 6",
-    description: "Các mẫu câu và từ vựng chuyên ngành Xuất nhập khẩu & Ngoại thương",
-    lessonIds: []
+    topicTitle: "TIẾNG TRUNG CHUYÊN NGÀNH DỰ ÁN ĐẦU TƯ",
+    title: "Quản lý thi công & tiến độ công trình",
+    description: "Bộ học tiếng Trung về xin giấy phép xây dựng, báo cáo và kiểm tra tiến độ thi công, quản lý và kiểm tra an toàn công trường, giải quyết và thông báo trễ hạn công trình, tổ chức nghiệm thu công trình, ghi chép nhật ký công trường, thực hiện thay đổi thiết kế, quản lý nhà thầu thi công, bàn giao bản vẽ hoàn công và thanh toán tiền tạm ứng công trình.",
+    lessonIds: [1451, 1452, 1453, 1454, 1455, 1456, 1457, 1458, 1459, 1460]
   },
   {
     id: 147,
     topicId: 15,
-    topicTitle: "TIẾNG TRUNG XUẤT NHẬP KHẨU",
-    title: "Xuất Nhập Khẩu 7",
-    description: "Các mẫu câu và từ vựng chuyên ngành Xuất nhập khẩu & Ngoại thương",
-    lessonIds: []
+    topicTitle: "TIẾNG TRUNG CHUYÊN NGÀNH DỰ ÁN ĐẦU TƯ",
+    title: "Mua sắm máy móc & thông quan thiết bị",
+    description: "Bộ học tiếng Trung về mua sắm dây chuyền sản xuất tự động, xin miễn thuế nhập khẩu thiết bị máy móc, chuẩn bị hồ sơ khai báo hải quan, tính toán chi phí kho ngoại quan, thực hiện kiểm hóa hiện trường và làm chứng nhận hợp quy.",
+    lessonIds: [1461, 1462, 1463, 1464, 1465, 1466, 1467, 1468, 1469, 1470]
   },
   {
     id: 148,
     topicId: 15,
-    topicTitle: "TIẾNG TRUNG XUẤT NHẬP KHẨU",
-    title: "Xuất Nhập Khẩu 8",
-    description: "Các mẫu câu và từ vựng chuyên ngành Xuất nhập khẩu & Ngoại thương",
-    lessonIds: []
+    topicTitle: "TIẾNG TRUNG CHUYÊN NGÀNH DỰ ÁN ĐẦU TƯ",
+    title: "Tuyển dụng bộ máy quản lý & lao động",
+    description: "Bộ học tiếng Trung về làm thủ tục giấy phép lao động và thẻ tạm trú, đón tiếp chuyên gia nước ngoài và tuyển dụng công nhân, soạn thảo và ký kết hợp đồng lao động, đào tạo kỹ sư và xây dựng kế hoạch nhân sự.",
+    lessonIds: [1471, 1472, 1473, 1474, 1475, 1476, 1477, 1478, 1479, 1480]
   },
   {
     id: 149,
     topicId: 15,
-    topicTitle: "TIẾNG TRUNG XUẤT NHẬP KHẨU",
-    title: "Xuất Nhập Khẩu 9",
-    description: "Các mẫu câu và từ vựng chuyên ngành Xuất nhập khẩu & Ngoại thương",
-    lessonIds: []
+    topicTitle: "TIẾNG TRUNG CHUYÊN NGÀNH DỰ ÁN ĐẦU TƯ",
+    title: "Quản lý ngân sách & giải ngân vốn đầu tư",
+    description: "Bộ học tiếng Trung về lập báo cáo tổng vốn đầu tư, theo dõi tiến độ góp vốn, mở tài khoản vốn đầu tư tại ngân hàng, xử lý thủ tục giải ngân và hồ sơ kiểm toán quyết toán định kỳ, thiết lập biểu ngân sách dự phòng và quản trị dòng tiền kế toán.",
+    lessonIds: [1481, 1482, 1483, 1484, 1485, 1486, 1487, 1488, 1489, 1490]
   },
   {
     id: 150,
     topicId: 15,
-    topicTitle: "TIẾNG TRUNG XUẤT NHẬP KHẨU",
-    title: "Xuất Nhập Khẩu 10",
-    description: "Các mẫu câu và từ vựng chuyên ngành Xuất nhập khẩu & Ngoại thương",
-    lessonIds: []
+    topicTitle: "TIẾNG TRUNG CHUYÊN NGÀNH DỰ ÁN ĐẦU TƯ",
+    title: "Vận hành thử nghiệm & nghiệm thu",
+    description: "Bộ học tiếng Trung chuyên ngành về quy trình vận hành thử nghiệm, tổ chức nghiệm thu bàn giao, lập kế hoạch sản xuất chính thức, kiểm định công suất thiết kế, kỹ sư kỹ thuật giải trình sơ đồ, rà soát nhật ký vận hành và lập các biên bản nghiệm thu, báo cáo tổng kết.",
+    lessonIds: [1491, 1492, 1493, 1494, 1495, 1496, 1497, 1498, 1499, 1500]
   }
 ];
