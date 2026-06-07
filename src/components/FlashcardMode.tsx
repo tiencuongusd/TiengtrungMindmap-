@@ -234,7 +234,7 @@ export const FlashcardMode: React.FC<Props> = ({ lesson, onBackToMindmap, hideHe
       setIsCorrect(null);
     } else {
       setShowSummary(true);
-      if (score >= questions.length * 0.6) {
+      if (score >= 8) {
         setTimeout(() => {
           setIsConfettiActive(true);
           playCelebrationSound();
@@ -333,9 +333,6 @@ export const FlashcardMode: React.FC<Props> = ({ lesson, onBackToMindmap, hideHe
                     >
                       {currentQuestion.targetNode.chinese}
                     </span>
-                    <span className="text-xs sm:text-sm font-black text-slate-400 font-sans tracking-wide mt-2">
-                       PINYIN: {currentQuestion.targetNode.pinyin}
-                    </span>
                   </div>
                 </>
               ) : (
@@ -349,11 +346,6 @@ export const FlashcardMode: React.FC<Props> = ({ lesson, onBackToMindmap, hideHe
                     <span className="text-3xl sm:text-4xl font-extrabold text-[#9E7A00] font-sans tracking-tight">
                       {currentQuestion?.targetNode.vietnamese}
                     </span>
-                    {currentQuestion?.targetNode.vietnameseHint && (
-                      <span className="text-xs sm:text-sm font-black text-[#B59A35] font-sans tracking-wide mt-2 italic">
-                        {currentQuestion.targetNode.vietnameseHint}
-                      </span>
-                    )}
                   </div>
                 </>
               )}
@@ -411,7 +403,7 @@ export const FlashcardMode: React.FC<Props> = ({ lesson, onBackToMindmap, hideHe
 
                         {isAnswered && option.node.chinese.trim() === currentQuestion.targetNode.chinese.trim() && (
                           <span className="text-[10px] text-[#58CC02] font-bold block mt-0.5">
-                            {option.node.chinese} ({option.node.pinyin})
+                            {option.node.chinese}
                           </span>
                         )}
                       </div>
@@ -440,7 +432,7 @@ export const FlashcardMode: React.FC<Props> = ({ lesson, onBackToMindmap, hideHe
                       <div className="text-left font-sans">
                         <h4 className="text-[#3D9002] font-black text-xs sm:text-sm uppercase tracking-wide mb-0.5 leading-none">Cực kỳ hoàn hảo!</h4>
                         <p className="text-[#3D9002] text-[11px] sm:text-xs font-bold leading-normal">
-                          {currentQuestion?.targetNode.chinese} • {currentQuestion?.targetNode.pinyin} nghĩa là: {currentQuestion?.targetNode.vietnamese}
+                          {currentQuestion?.targetNode.chinese} nghĩa là: {currentQuestion?.targetNode.vietnamese}
                         </p>
                       </div>
                     </>
@@ -525,13 +517,9 @@ export const FlashcardMode: React.FC<Props> = ({ lesson, onBackToMindmap, hideHe
               BÀI LUYỆN HOÀN THÀNH
             </div>
             
-            <h3 className="text-xl sm:text-2xl font-black text-slate-800 leading-none mb-3 font-sans">
-              {score === questions.length ? "Siêu sao dịch thuật! 🏆" : "Hoàn thành tuyệt vời! 🌟"}
+            <h3 className="text-xl sm:text-2xl font-black text-slate-800 leading-none mb-6 font-sans">
+              {score >= 8 ? "Hoàn thành tuyệt vời! 🌟" : "Cố gắng lên! 💪"}
             </h3>
-
-            <p className="text-duo-sub text-xs font-bold leading-relaxed mb-6 font-sans">
-              Khả năng hiểu nghĩa chữ Hán song phương hai chiều rất chắc chắn. Nhấp dưới đây để luyện thêm từ mới!
-            </p>
 
             {/* Statistics Dashboard */}
             <div className="grid grid-cols-2 gap-4 mb-6">

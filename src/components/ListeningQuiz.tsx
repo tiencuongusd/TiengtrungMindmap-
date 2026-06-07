@@ -218,7 +218,7 @@ export const ListeningQuiz: React.FC<Props> = ({ lesson, onBackToMap, nextLesson
     } else {
       // Quiz finished!
       setShowSummary(true);
-      if (score >= questions.length * 0.6) {
+      if (score >= 8) {
         setTimeout(() => {
           setIsConfettiActive(true);
           playCelebrationSound();
@@ -387,7 +387,7 @@ export const ListeningQuiz: React.FC<Props> = ({ lesson, onBackToMap, nextLesson
                         {/* Show meaning details after checked */}
                         {isAnswered && option.chinese.trim() === currentQuestion.targetNode.chinese.trim() && (
                           <span className="text-[10px] block font-bold text-[#58CC02] mt-1 font-sans">
-                            {option.pinyin} • {option.vietnamese}
+                            {option.vietnamese}
                           </span>
                         )}
                       </div>
@@ -418,7 +418,7 @@ export const ListeningQuiz: React.FC<Props> = ({ lesson, onBackToMap, nextLesson
                       <div className="text-left font-sans">
                         <h4 className="text-[#3D9002] font-black text-sm uppercase tracking-wide leading-none mb-1">Rất tốt! Bạn nghe chuẩn đấy</h4>
                         <p className="text-[#3D9002] text-xs font-bold leading-normal">
-                          {currentQuestion?.targetNode.chinese} = {currentQuestion?.targetNode.vietnamese} ({currentQuestion?.targetNode.pinyin})
+                          {currentQuestion?.targetNode.chinese} = {currentQuestion?.targetNode.vietnamese}
                         </p>
                       </div>
                     </>
@@ -430,7 +430,7 @@ export const ListeningQuiz: React.FC<Props> = ({ lesson, onBackToMap, nextLesson
                       <div className="text-left font-sans">
                         <h4 className="text-[#B01F0A] font-black text-sm uppercase tracking-wide leading-none mb-1">Cố lên! Hãy nghe lại kỹ nhé</h4>
                         <p className="text-[#B01F0A] text-xs font-bold leading-normal">
-                          Đáp án đúng là: <strong className="font-extrabold text-slate-800">{currentQuestion?.targetNode.chinese}</strong> ({currentQuestion?.targetNode.pinyin})
+                          Đáp án đúng là: <strong className="font-extrabold text-slate-800">{currentQuestion?.targetNode.chinese}</strong>
                         </p>
                       </div>
                     </>
@@ -501,13 +501,9 @@ export const ListeningQuiz: React.FC<Props> = ({ lesson, onBackToMap, nextLesson
               BÀI LUYỆN HOÀN THÀNH
             </div>
             
-            <h3 className="text-xl sm:text-2xl font-black text-slate-800 leading-none mb-3 font-sans">
-              {score === questions.length ? "Tiếng Trung tuyệt hảo! ⭐" : "Quá xuất sắc! 🎉"}
+            <h3 className="text-xl sm:text-2xl font-black text-slate-800 leading-none mb-6 font-sans">
+              {score >= 8 ? "Hoàn thành tuyệt vời! 🌟" : "Cố gắng lên! 💪"}
             </h3>
-
-            <p className="text-duo-sub text-xs font-bold leading-relaxed mb-6 font-sans">
-              Bạn đạt được tỉ lệ nghe chuẩn vượt trội trong bài luyện hôm nay. Hãy duy trì nhịp độ nhé!
-            </p>
 
             {/* Statistics Board */}
             <div className="grid grid-cols-2 gap-4 mb-6">

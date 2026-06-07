@@ -63,31 +63,6 @@ export const AudioSettingsModal: React.FC<{ isOpen: boolean; onClose: () => void
           </div>
 
           <div className="space-y-6">
-            {/* Toggle Transliteration (Phiên âm bồi) */}
-            <div className="flex items-center justify-between pb-6 border-b-2 border-duo-gray">
-              <div className="max-w-[72%]">
-                <span className="text-[12px] font-black uppercase tracking-widest text-slate-700 block mb-1 font-sans">Hiển thị Phiên âm bồi (Bồi âm)</span>
-                <span className="text-[10px] text-slate-450 font-bold block leading-normal">Bật hoặc tắt dòng hiển thị phiên âm tiếng Việt bồi</span>
-                <span className="text-[9.5px] text-duo-orange font-bold block leading-relaxed mt-1 font-sans">
-                  * Khuyên dùng tắt đi khi đã quen chữ Hán
-                </span>
-              </div>
-              <button 
-                onClick={() => handleUpdate({ showVietnameseHint: settings.showVietnameseHint !== false ? false : true })}
-                className={cn(
-                  "relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none",
-                  settings.showVietnameseHint !== false ? "bg-duo-green" : "bg-slate-200"
-                )}
-              >
-                <span
-                  className={cn(
-                    "pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out",
-                    settings.showVietnameseHint !== false ? "translate-x-5" : "translate-x-0"
-                  )}
-                />
-              </button>
-            </div>
-
             {/* Rate Selection */}
             <div className="pb-2">
               <div className="flex items-center justify-between mb-2">

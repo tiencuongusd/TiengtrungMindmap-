@@ -456,6 +456,10 @@ export const MindMapNode: React.FC<Props> = ({ node, level, isRoot, hideBadge })
   };
 
   const renderPinyinText = (defaultClass: string) => {
+    if (settings.showPinyin === false) {
+      return null;
+    }
+
     if (!isCurrentText) {
       return <span className={defaultClass}>{node.pinyin}</span>;
     }

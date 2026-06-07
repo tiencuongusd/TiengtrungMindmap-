@@ -7,12 +7,14 @@ export interface AudioSettings {
   voiceURI?: string;
   genderPreference?: 'male' | 'female' | 'auto';
   showVietnameseHint?: boolean;
+  showPinyin?: boolean;
 }
 
 const DEFAULT_SETTINGS: AudioSettings = {
   rate: 0.8,
   genderPreference: 'auto',
-  showVietnameseHint: false,
+  showVietnameseHint: true,
+  showPinyin: true,
 };
 
 let settings: AudioSettings = { ...DEFAULT_SETTINGS };
