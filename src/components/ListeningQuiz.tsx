@@ -41,15 +41,50 @@ function shuffleArray<T>(array: T[]): T[] {
   return arr;
 }
 
-// Flatten nested mindmap nodes recursively
-function flattenMindMapNodes(nodes: MindMapNode[]): MindMapNode[] {
+// Helper to classify if a node is a sentence (câu) vs word/phrase
+function isSentence(node: MindMapNode): boolean {
+  const chinese = (node.chinese || '').trim();
+  const vietnamese = (node.vietnamese || '').trim();
+
+  // 1. Check Chinese or English sentence punctuation
+  const hasSentencePunctuation = /[\u3002\uff0c\uff1f\uff01\uff1b\uff1a,?!;:]/g.test(chinese);
+  if (hasSentencePunctuation) {
+    return true;
+  }
+
+  // 2. Check if Vietnamese translation ends/contains sentence terminal punctuation
+  const hasVietnamesePunctuation = /[.?!]/g.test(vietnamese);
+  if (hasVietnamesePunctuation) {
+    return true;
+  }
+
+  // 3. Length check: generally words or phrases are short, sentences are longer.
+  // Chinese characters >= 6 are highly likely to be full sentences.
+  if (chinese.length >= 6) {
+    return true;
+  }
+
+  return false;
+}
+
+// Flatten nested mindmap nodes recursively up to depth 2 (Từ chính, từ phụ, cụm từ) and exclude sentences
+function flattenMindMapNodes(nodes: MindMapNode[], depth: number = 0): MindMapNode[] {
   let result: MindMapNode[] = [];
+  
+  // Depth 0: Từ chính, Depth 1: Từ phụ, Depth 2: Cụm từ
+  if (depth > 2) {
+    return [];
+  }
+
   for (const node of nodes) {
-    if (node.chinese && node.chinese.trim() && node.vietnamese && node.vietnamese.trim()) {
+    const isNodeValid = node.chinese && node.chinese.trim() && node.vietnamese && node.vietnamese.trim();
+    
+    if (isNodeValid && !isSentence(node)) {
       result.push(node);
     }
+    
     if (node.children && node.children.length > 0) {
-      result = result.concat(flattenMindMapNodes(node.children));
+      result = result.concat(flattenMindMapNodes(node.children, depth + 1));
     }
   }
   return result;
@@ -90,7 +125,25 @@ export const ListeningQuiz: React.FC<Props> = ({ lesson, onBackToMap, nextLesson
     if (!lesson.mindMaps) return;
 
     // 1. Flatten nodes and deduplicate by Chinese word
-    const allNodes = flattenMindMapNodes(lesson.mindMaps);
+    let allNodes = flattenMindMapNodes(lesson.mindMaps);
+    
+    // Safety fallback: if no short words/phrases under depth 2 exist, fall back to extracting and showing all nodes
+    if (allNodes.length === 0) {
+      const traverseAll = (nodes: MindMapNode[]): MindMapNode[] => {
+        let res: MindMapNode[] = [];
+        for (const n of nodes) {
+          if (n.chinese && n.chinese.trim() && n.vietnamese && n.vietnamese.trim()) {
+            res.push(n);
+          }
+          if (n.children && n.children.length > 0) {
+            res = res.concat(traverseAll(n.children));
+          }
+        }
+        return res;
+      };
+      allNodes = traverseAll(lesson.mindMaps);
+    }
+
     const seenChinese = new Set<string>();
     const uniqueNodes: MindMapNode[] = [];
 

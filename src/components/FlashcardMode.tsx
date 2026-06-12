@@ -57,15 +57,50 @@ function shuffle<T>(arr: T[]): T[] {
   return result;
 }
 
-// Recursively parse vocabulary items from mindmaps
-function getLessonVocabList(nodes: MindMapNode[]): MindMapNode[] {
+// Helper to classify if a node is a sentence (câu) vs word/phrase
+function isSentence(node: MindMapNode): boolean {
+  const chinese = (node.chinese || '').trim();
+  const vietnamese = (node.vietnamese || '').trim();
+
+  // 1. Check Chinese or English sentence punctuation
+  const hasSentencePunctuation = /[\u3002\uff0c\uff1f\uff01\uff1b\uff1a,?!;:]/g.test(chinese);
+  if (hasSentencePunctuation) {
+    return true;
+  }
+
+  // 2. Check if Vietnamese translation ends/contains sentence terminal punctuation
+  const hasVietnamesePunctuation = /[.?!]/g.test(vietnamese);
+  if (hasVietnamesePunctuation) {
+    return true;
+  }
+
+  // 3. Length check: generally words or phrases are short, sentences are longer.
+  // Chinese characters >= 6 are highly likely to be full sentences.
+  if (chinese.length >= 6) {
+    return true;
+  }
+
+  return false;
+}
+
+// Recursively parse vocabulary items from mindmaps up to depth 2 (Từ chính, từ phụ, cụm từ) and exclude sentences
+function getLessonVocabList(nodes: MindMapNode[], depth: number = 0): MindMapNode[] {
   let list: MindMapNode[] = [];
+  
+  // Depth 0: Từ chính, Depth 1: Từ phụ, Depth 2: Cụm từ
+  if (depth > 2) {
+    return [];
+  }
+
   for (const n of nodes) {
-    if (n.chinese && n.chinese.trim() && n.vietnamese && n.vietnamese.trim()) {
+    const isNodeValid = n.chinese && n.chinese.trim() && n.vietnamese && n.vietnamese.trim();
+    
+    if (isNodeValid && !isSentence(n)) {
       list.push(n);
     }
+    
     if (n.children && n.children.length > 0) {
-      list = list.concat(getLessonVocabList(n.children));
+      list = list.concat(getLessonVocabList(n.children, depth + 1));
     }
   }
   return list;
@@ -105,7 +140,24 @@ export const FlashcardMode: React.FC<Props> = ({ lesson, onBackToMindmap, hideHe
   useEffect(() => {
     if (!lesson.mindMaps) return;
 
-    const rawVocab = getLessonVocabList(lesson.mindMaps);
+    let rawVocab = getLessonVocabList(lesson.mindMaps);
+    
+    // Safety fallback: if no short words/phrases under depth 2 exist, fall back to extracting and showing all nodes
+    if (rawVocab.length === 0) {
+      const traverseAll = (nodes: MindMapNode[]): MindMapNode[] => {
+        let res: MindMapNode[] = [];
+        for (const n of nodes) {
+          if (n.chinese && n.chinese.trim() && n.vietnamese && n.vietnamese.trim()) {
+            res.push(n);
+          }
+          if (n.children && n.children.length > 0) {
+            res = res.concat(traverseAll(n.children));
+          }
+        }
+        return res;
+      };
+      rawVocab = traverseAll(lesson.mindMaps);
+    }
     
     // Deduplicate by Chinese word
     const uniqVocab: MindMapNode[] = [];

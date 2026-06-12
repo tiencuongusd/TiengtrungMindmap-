@@ -60,10 +60,15 @@ function formatMindMapNode(node: MindMapNode): MindMapNode {
 
 function formatLesson(lesson: Lesson): Lesson {
   let originalTitle = lesson.title;
+  
+  // Remove Chinese characters inside standard or full-width parentheses
+  originalTitle = originalTitle.replace(/\s*\([^)]*[\u4e00-\u9fa5\u3400-\u4dbf][^)]*\)/g, '');
+  originalTitle = originalTitle.replace(/\s*（[^）]*[\u4e00-\u9fa5\u3400-\u4dbf][^）]*）/g, '');
+
   if (lesson.id >= 1001) {
     originalTitle = originalTitle.replace(/^(từ vựng:\s*|từ vựng\s*)/i, '');
   }
-  const formattedTitle = formatVietnameseTitle(originalTitle);
+  const formattedTitle = formatVietnameseTitle(originalTitle.trim());
   
   let formattedDescription = lesson.description;
   if (formattedDescription) {

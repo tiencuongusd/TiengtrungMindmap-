@@ -268,6 +268,28 @@ export const MindMapNode: React.FC<Props> = ({ node, level, isRoot, hideBadge })
 
   const wordTimerRef = React.useRef<NodeJS.Timeout | null>(null);
 
+  React.useEffect(() => {
+    if (!clickedWord) return;
+
+    const handleGlobalClick = () => {
+      setClickedWord(null);
+    };
+
+    const handleOtherWordClicked = (e: any) => {
+      // Close the popup if a word was clicked on another node, or if it's a different word
+      if (e.detail?.node !== node || e.detail?.word !== clickedWord.text) {
+        setClickedWord(null);
+      }
+    };
+
+    document.addEventListener('click', handleGlobalClick);
+    document.addEventListener('chinese-word-clicked', handleOtherWordClicked);
+    return () => {
+      document.removeEventListener('click', handleGlobalClick);
+      document.removeEventListener('chinese-word-clicked', handleOtherWordClicked);
+    };
+  }, [clickedWord, node]);
+
   // Word tokens computed at top level of the node
   const wordTokens = React.useMemo(() => {
     const tokens = tokenizePinyin(node.pinyin);
@@ -362,8 +384,19 @@ export const MindMapNode: React.FC<Props> = ({ node, level, isRoot, hideBadge })
     // Stop any general sentence playback
     stopChineseAudio();
 
+    // Toggle off if clicking the same active word
+    if (clickedWord && clickedWord.text === word) {
+      setClickedWord(null);
+      return;
+    }
+
     // Speak only the clicked word
     playChineseAudio(word, true);
+
+    // Notify other nodes to close their popups
+    document.dispatchEvent(new CustomEvent('chinese-word-clicked', { 
+      detail: { node, word } 
+    }));
 
     // Dynamic meaning lookup from course database and fallbacks
     const definition = getWordDefinition(word, pinyin);
@@ -377,9 +410,6 @@ export const MindMapNode: React.FC<Props> = ({ node, level, isRoot, hideBadge })
     if (wordTimerRef.current) {
       clearTimeout(wordTimerRef.current);
     }
-    wordTimerRef.current = setTimeout(() => {
-      setClickedWord(null);
-    }, 2000);
   };
 
   const renderChineseText = (textSizeClass: string) => {
@@ -437,7 +467,7 @@ export const MindMapNode: React.FC<Props> = ({ node, level, isRoot, hideBadge })
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 4, scale: 0.95 }}
                     transition={{ duration: 0.15 }}
-                    className="absolute left-1/2 -translate-x-1/2 bottom-full mb-3.5 z-50 bg-duo-green border-2 border-duo-green-dark text-white text-xs font-sans font-bold px-4 py-2 rounded-2xl shadow-[0_4px_0_#46A302] flex flex-col items-center gap-1 whitespace-nowrap leading-tight cursor-default pointer-events-auto"
+                    className="absolute left-1/2 -translate-x-1/2 bottom-full mb-3.5 z-50 bg-duo-green border-2 border-duo-green-dark text-white text-xs font-sans font-bold px-4 py-2 rounded-2xl shadow-[0_4px_0_#46A302] flex flex-col items-center gap-1 min-w-[140px] max-w-[260px] sm:max-w-[320px] whitespace-normal text-center leading-tight cursor-default pointer-events-auto"
                     onClick={(e) => e.stopPropagation()}
                   >
                     {/* Down arrow pointing towards the word */}

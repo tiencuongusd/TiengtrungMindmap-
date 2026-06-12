@@ -24,6 +24,7 @@ import { StrokeOrderWriter } from './components/StrokeOrderWriter';
 import { FlashcardMode } from './components/FlashcardMode';
 import { useAudioPlayback } from './lib/audio';
 import { ListeningQuiz } from './components/ListeningQuiz';
+import { SpeakingPractice } from './components/SpeakingPractice';
 import { cn } from './lib/utils';
 
 export default function App() {
@@ -86,7 +87,7 @@ export default function App() {
 
   // Character Writing State
   const [activeWritingWord, setActiveWritingWord] = useState<string>('');
-  const [activeSectionTab, setActiveSectionTab] = useState<'mindmap' | 'writer' | 'flashcard' | 'quiz'>('mindmap');
+  const [activeSectionTab, setActiveSectionTab] = useState<'mindmap' | 'flashcard' | 'quiz' | 'speaking'>('mindmap');
 
   const handleGroupSelect = (id: number) => {
     setSelectedGroupId(id);
@@ -186,7 +187,7 @@ export default function App() {
                 </button>
                 <div className="min-w-0">
                   <div className="text-[10px] font-black uppercase tracking-widest text-duo-green mb-1">Nội dung bài học</div>
-                  <h3 className="text-xl md:text-3xl font-black tracking-tight text-slate-800 truncate">
+                  <h3 className="text-xl md:text-3xl font-black tracking-tight text-slate-800 whitespace-normal break-words">
                     Bài {selectedLesson.id}: {selectedLesson.title}
                   </h3>
                 </div>
@@ -215,18 +216,6 @@ export default function App() {
               <span className="sm:hidden">Sơ đồ</span>
             </button>
             <button
-              onClick={() => setActiveSectionTab('writer')}
-              className={`flex-1 py-2 sm:py-3 px-1 sm:px-4 rounded-[1.1rem] md:rounded-[1.75rem] font-black text-[9.5px] min-[360px]:text-[10px] min-[400px]:text-[11px] sm:text-xs md:text-sm uppercase tracking-wider flex items-center justify-center gap-1 sm:gap-1.5 transition-all duration-150 active:scale-[0.98] cursor-pointer border-2 border-b-4 select-none whitespace-nowrap ${
-                activeSectionTab === 'writer'
-                  ? 'bg-white text-slate-800 border-[#E5E5E5] shadow-[0_2.5px_0_#E5E5E5]'
-                  : 'text-slate-500 border-transparent hover:text-slate-700 hover:bg-white/40'
-              }`}
-            >
-              <span className="hidden min-[390px]:inline">✍️</span>
-              <span className="hidden sm:inline">Tập viết chữ</span>
-              <span className="sm:hidden">Tập viết</span>
-            </button>
-            <button
               onClick={() => setActiveSectionTab('flashcard')}
               className={`flex-1 py-2 sm:py-3 px-1 sm:px-4 rounded-[1.1rem] md:rounded-[1.75rem] font-black text-[9.5px] min-[360px]:text-[10px] min-[400px]:text-[11px] sm:text-xs md:text-sm uppercase tracking-wider flex items-center justify-center gap-1 sm:gap-1.5 transition-all duration-150 active:scale-[0.98] cursor-pointer border-2 border-b-4 select-none whitespace-nowrap ${
                 activeSectionTab === 'flashcard'
@@ -240,7 +229,7 @@ export default function App() {
             </button>
             <button
               onClick={() => setActiveSectionTab('quiz')}
-              className={`flex-1 py-2 sm:py-3 px-1 sm:px-4 rounded-[1.1rem] md:rounded-[1.75rem] font-black text-[9.5px] min-[360px]:text-[10px] min-[400px]:text-[11px] sm:text-xs md:text-sm uppercase tracking-wider flex items-center justify-center gap-1 sm:gap-1.5 transition-all duration-150 active:scale-[0.98] cursor-pointer border-2 border-b-4 select-none whitespace-nowrap ${
+              className={`flex-1 py-1.5 sm:py-3 px-1 sm:px-4 rounded-[1.1rem] md:rounded-[1.75rem] font-black text-[9px] min-[360px]:text-[9.5px] min-[400px]:text-[10px] sm:text-xs md:text-sm uppercase tracking-wider flex items-center justify-center gap-1 sm:gap-1.5 transition-all duration-150 active:scale-[0.98] cursor-pointer border-2 border-b-4 select-none whitespace-nowrap ${
                 activeSectionTab === 'quiz'
                   ? 'bg-white text-slate-800 border-[#E5E5E5] shadow-[0_2.5px_0_#E5E5E5]'
                   : 'text-slate-500 border-transparent hover:text-slate-700 hover:bg-white/40'
@@ -248,10 +237,22 @@ export default function App() {
             >
               <span className="hidden min-[390px]:inline">🎧</span>
               <span className="hidden sm:inline">Luyện nghe</span>
-              <span className="sm:hidden">Nghe dịch</span>
+              <span className="sm:hidden">Luyện nghe</span>
+            </button>
+            <button
+              onClick={() => setActiveSectionTab('speaking')}
+              className={`flex-1 py-1.5 sm:py-3 px-1 sm:px-4 rounded-[1.1rem] md:rounded-[1.75rem] font-black text-[9px] min-[360px]:text-[9.5px] min-[400px]:text-[10px] sm:text-xs md:text-sm uppercase tracking-wider flex items-center justify-center gap-1 sm:gap-1.5 transition-all duration-150 active:scale-[0.98] cursor-pointer border-2 border-b-4 select-none whitespace-nowrap ${
+                activeSectionTab === 'speaking'
+                  ? 'bg-white text-slate-800 border-[#E5E5E5] shadow-[0_2.5px_0_#E5E5E5]'
+                  : 'text-slate-500 border-transparent hover:text-slate-700 hover:bg-white/40'
+              }`}
+            >
+              <span className="hidden min-[390px]:inline">🗣️</span>
+              <span className="hidden sm:inline">Luyện nói</span>
+              <span className="sm:hidden">Luyện nói</span>
             </button>
           </div>
-
+ 
           {/* Active Tab Panel with smooth fade/slide transition */}
           <div className="w-full mt-4">
             <AnimatePresence mode="wait">
@@ -280,22 +281,11 @@ export default function App() {
                       </div>
                     </div>
                   </div>
-                </motion.div>
-              )}
 
-              {activeSectionTab === 'writer' && (
-                <motion.div
-                  key="writer-tab"
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -15 }}
-                  transition={{ duration: 0.2 }}
-                  className="space-y-4 max-w-2xl mx-auto w-full"
-                >
-                  <div className="text-center px-4 mb-2">
-                    <p className="text-xs text-slate-400 font-bold">Luyện viết chữ Hán theo quy tắc nét bút thuận (Hãy quay lại Tab Sơ đồ tư duy và nhấn vào từ bất kỳ để viết từ đó)</p>
+                  {/* Character writing practice section directly underneath the mindmap */}
+                  <div className="max-w-2xl mx-auto w-full pt-4">
+                    <StrokeOrderWriter word={activeWritingWord || selectedLesson.mindMaps?.[0]?.chinese || ''} />
                   </div>
-                  <StrokeOrderWriter word={activeWritingWord || selectedLesson.mindMaps?.[0]?.chinese || ''} />
                 </motion.div>
               )}
 
@@ -327,6 +317,24 @@ export default function App() {
                   className="space-y-4 max-w-2xl mx-auto w-full"
                 >
                   <ListeningQuiz
+                    lesson={selectedLesson}
+                    onBackToMap={() => setActiveSectionTab('mindmap')}
+                    nextLesson={nextLesson}
+                    onSelectNextLesson={handleLessonSelect}
+                  />
+                </motion.div>
+              )}
+
+              {activeSectionTab === 'speaking' && (
+                <motion.div
+                  key="speaking-tab"
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -15 }}
+                  transition={{ duration: 0.2 }}
+                  className="space-y-4 max-w-2xl mx-auto w-full"
+                >
+                  <SpeakingPractice
                     lesson={selectedLesson}
                     onBackToMap={() => setActiveSectionTab('mindmap')}
                     nextLesson={nextLesson}
