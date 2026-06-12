@@ -544,6 +544,10 @@ export const MindMapNode: React.FC<Props> = ({ node, level, isRoot, hideBadge })
     } else {
       playChineseAudio(node.chinese);
     }
+    setClickedWord(null);
+    document.dispatchEvent(new CustomEvent('chinese-word-clicked', { 
+      detail: { node, word: null } 
+    }));
   };
 
   React.useEffect(() => {
