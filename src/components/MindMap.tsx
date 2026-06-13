@@ -22,7 +22,7 @@ const Branch: React.FC<BranchProps> = ({ root }) => {
                   <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
                   Từ chính
                 </div>
-                <MindMapNode node={root} level={1} />
+                <MindMapNode node={root} level={0} />
               </div>
 
               {/* Level 1 Node (Sub-topic / Từ phụ) */}

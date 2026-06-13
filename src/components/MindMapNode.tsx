@@ -5,6 +5,7 @@ import { MindMapNode as MindMapNodeType } from '../types';
 import { playChineseAudio, stopChineseAudio, useAudioPlayback, useAudioSettings } from '../lib/audio';
 import { cn } from '../lib/utils';
 import { lessons } from '../data/lessons';
+import { CHIET_TU_DICT, ChietTu } from '../data/chietTu';
 
 interface Props {
   node: MindMapNodeType;
@@ -265,6 +266,36 @@ export const MindMapNode: React.FC<Props> = ({ node, level, isRoot, hideBadge })
     pinyin: string;
     translation: string;
   } | null>(null);
+
+  const [showDecomp, setShowDecomp] = React.useState(false);
+
+  const matchedDecompositions = React.useMemo(() => {
+    const list: ChietTu[] = [];
+    const cleanChinese = (node.chinese || '').trim();
+    if (!cleanChinese) return list;
+
+    // 1. Kiểm tra từ ghép nguyên vẹn (ví dụ: "漂亮", "高兴", "认识", "经理", "老板", "谢谢", "再见", "介绍")
+    if (CHIET_TU_DICT[cleanChinese]) {
+      list.push(CHIET_TU_DICT[cleanChinese]);
+    }
+
+    // 2. Kiểm tra từng chữ đơn cấu thành (ví dụ: "工作" -> "工" + "作")
+    for (const char of cleanChinese) {
+      if (char !== cleanChinese && CHIET_TU_DICT[char]) {
+        // Tránh trùng lặp
+        if (!list.some(item => item.hanzi === char)) {
+          list.push(CHIET_TU_DICT[char]);
+        }
+      }
+    }
+
+    // 3. Nếu không có ở các bước trên và chỉ có 1 chữ, kiểm tra từ điển chữ đơn từ danh sách
+    if (list.length === 0 && cleanChinese.length === 1 && CHIET_TU_DICT[cleanChinese]) {
+      list.push(CHIET_TU_DICT[cleanChinese]);
+    }
+
+    return list;
+  }, [node.chinese]);
 
   const wordTimerRef = React.useRef<NodeJS.Timeout | null>(null);
 
@@ -592,7 +623,7 @@ export const MindMapNode: React.FC<Props> = ({ node, level, isRoot, hideBadge })
         </div>
 
         {/* Căn giữa nút phát âm dưới các thành phần chữ rất đẹp */}
-        <div className="mt-4">
+        <div className="mt-4 flex flex-col items-center gap-3 w-full">
           <button
             onClick={handlePlayAudio}
             className={cn(
@@ -603,6 +634,80 @@ export const MindMapNode: React.FC<Props> = ({ node, level, isRoot, hideBadge })
           >
             {isCurrentText ? <VolumeX size={16} /> : <Volume2 size={16} />}
           </button>
+
+          {/* CHIẾT TỰ CHỮ HÁN CHO TỪ CHÍNH QUÝ GIÁ */}
+          {matchedDecompositions.length > 0 && (
+            <div className="mt-1 w-full max-w-[320px] sm:max-w-[380px] mx-auto text-left pointer-events-auto">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowDecomp(!showDecomp);
+                }}
+                className={cn(
+                  "w-full flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-full text-[10.5px] md:text-[11.5px] font-black tracking-wide uppercase transition-all shadow-sm border cursor-pointer",
+                  showDecomp 
+                    ? "bg-amber-100/90 hover:bg-amber-150/90 text-amber-800 border-amber-200"
+                    : "bg-white hover:bg-slate-50 text-slate-600 border-slate-200"
+                )}
+              >
+                <Sparkles size={11} className={cn("text-amber-500", showDecomp && "animate-pulse")} />
+                {showDecomp ? "Ẩn giải mã chiết tự" : "Xem chiết tự chữ Hán"}
+              </button>
+
+              <AnimatePresence>
+                {showDecomp && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                    animate={{ opacity: 1, height: "auto", marginTop: 10 }}
+                    exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                    transition={{ duration: 0.18 }}
+                    className="overflow-hidden"
+                  >
+                    <div 
+                      className="bg-[#FFFDF3] border-2 border-amber-150 rounded-2xl p-3.5 shadow-sm flex flex-col gap-3"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <h4 className="text-amber-900 font-black text-[11px] uppercase tracking-wider flex items-center gap-1 border-b border-amber-200/40 pb-1.5">
+                        <Sparkles size={11} className="text-amber-500 animate-spin" />
+                        💡 Giải mã chiết tự từ chính
+                      </h4>
+                      
+                      <div className="flex flex-col gap-3">
+                        {matchedDecompositions.map((item, idx) => (
+                          <div key={idx} className="flex gap-2.5 items-start border-b border-dashed border-amber-100 last:border-0 pb-3 last:pb-0">
+                            {/* Hộp viết chữ Hán kẻ ô */}
+                            <div className="relative w-10 h-10 min-w-[40px] flex items-center justify-center border border-dashed border-red-300/60 bg-white text-lg font-black rounded-xl text-slate-900 shadow-sm overflow-hidden flex-shrink-0 select-none">
+                              {/* Kẻ chữ thập mờ nét đứt */}
+                              <div className="absolute inset-x-0 border-t border-dashed border-red-100/40 top-1/2" />
+                              <div className="absolute inset-y-0 border-l border-dashed border-red-100/40 left-1/2" />
+                              <span className="relative z-10 leading-none chinese-char font-extrabold text-red-800">{item.hanzi}</span>
+                            </div>
+
+                            <div className="flex flex-col gap-0.5 leading-snug">
+                              <div className="flex items-baseline gap-1.5">
+                                <span className="text-[10px] uppercase tracking-wider font-extrabold text-amber-700">{item.pinyin}</span>
+                                <span className="text-[11px] font-black text-slate-800 tracking-wide font-sans">-{item.hanViet}-</span>
+                              </div>
+                              
+                              {item.radicals && (
+                                <div className="text-[9.5px] font-bold text-slate-450 italic">
+                                  Cấu trúc: {item.radicals}
+                                </div>
+                              )}
+
+                              <p className="text-[11.5px] font-medium text-slate-600 mt-1 leading-relaxed font-sans normal-case">
+                                {item.mnemonic}
+                              </p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          )}
         </div>
       </motion.div>
     );

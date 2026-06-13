@@ -453,7 +453,7 @@ export const FlashcardMode: React.FC<Props> = ({ lesson, onBackToMindmap, hideHe
                           {option.text}
                         </span>
 
-                        {isAnswered && option.node.chinese.trim() === currentQuestion.targetNode.chinese.trim() && (
+                        {isAnswered && currentQuestion.type !== 'vi-to-zh' && option.node.chinese.trim() === currentQuestion.targetNode.chinese.trim() && (
                           <span className="text-[10px] text-[#58CC02] font-bold block mt-0.5">
                             {option.node.chinese}
                           </span>
